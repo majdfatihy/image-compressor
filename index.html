@@ -6,21 +6,32 @@
 <title>مصغر وضاغط الصور</title>
 <style>
 #mf-image-tool,#mf-image-tool *{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Tahoma,Arial,"Noto Sans Arabic",sans-serif;}
 #mf-image-tool{
 --bg:#f4f6f8;--card:#fff;--text:#17202a;--muted:#68737d;
 --border:#dce2e7;--primary:#e87524;--primary-dark:#c85d12;
 --success:#218653;--danger:#d74646;
 width:100%;max-width:1180px;margin:0 auto;padding:16px;
-background:var(--bg);color:var(--text);
-font-family:Tahoma,Arial,"Noto Sans Arabic",sans-serif;direction:rtl
+background:var(--bg);color:var(--text);direction:rtl;min-height:100vh;
 }
 #mf-image-tool.mf-dark{--bg:#11161b;--card:#1b2127;--text:#f2f4f5;--muted:#aeb7bf;--border:#303941}
+body:has(#mf-image-tool.mf-dark){background:#11161b;}
 .mf-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
 .mf-title{margin:0;font-size:24px;font-weight:800}.mf-subtitle{margin:4px 0 0;color:var(--muted);font-size:13px}
 .mf-theme{width:42px;height:42px;flex:0 0 42px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);cursor:pointer;font-size:18px}
+
+/* أزرار التواصل الاجتماعي العلوية */
+.mf-social-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.mf-social-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);text-decoration:none;font-size:12px;font-weight:700;transition:.2s;}
+.mf-social-btn:hover{border-color:var(--primary);color:var(--primary);}
+
 .mf-upload{display:block;width:100%;padding:34px 18px;border:2px dashed var(--border);border-radius:16px;background:var(--card);text-align:center;cursor:pointer}
-.mf-upload:hover,.mf-upload.dragover{border-color:var(--primary);background:rgba(232,117,36,.06)}
-.mf-upload input{display:none}.mf-upload-icon{font-size:42px}.mf-upload-title{margin-top:8px;font-size:18px;font-weight:800}.mf-upload-text{margin-top:5px;color:var(--muted);font-size:13px}
+.mf-upload:hover,.mf-upload.dragover,.mf-drop-mini:hover{border-color:var(--primary);background:rgba(232,117,36,.06)}
+.mf-upload input,.mf-drop-mini input{display:none}.mf-upload-icon{font-size:42px}.mf-upload-title{margin-top:8px;font-size:18px;font-weight:800}.mf-upload-text{margin-top:5px;color:var(--muted);font-size:13px}
+
+/* الشريط الرفيع البديل */
+.mf-drop-mini{display:none;width:100%;padding:14px;border:2px dashed var(--border);border-radius:12px;text-align:center;background:var(--card);cursor:pointer;margin-bottom:14px;font-size:13px;font-weight:700;color:var(--muted);}
+
 .mf-main{display:none;margin-top:14px}.mf-main.active{display:block}
 .mf-preview-card{width:100%;padding:12px;border:1px solid var(--border);border-radius:16px;background:var(--card)}
 .mf-preview-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.mf-preview-title{font-size:15px;font-weight:800}.mf-preview-help{color:var(--muted);font-size:11px}
@@ -57,9 +68,13 @@ background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touc
 .mf-method input{margin-top:3px;accent-color:var(--primary)}.mf-method strong{display:block;font-size:12px}.mf-method span{display:block;margin-top:2px;color:var(--muted);font-size:10px}
 .mf-target{display:none;grid-template-columns:1fr 100px;gap:8px;margin-top:8px}.mf-target.show{display:grid}
 .mf-status{display:none;margin-top:9px;padding:9px;border-radius:9px;background:rgba(33,134,83,.09);color:var(--success);font-size:11px}
-.mf-status.show{display:block}.mf-buttons{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-top:10px}
+.mf-status.show{display:block}
+
+/* الأزرار أسفل الضغط الفاقد */
+.mf-buttons{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-top:12px}
 .mf-button{min-height:43px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);cursor:pointer;font-weight:800}
 .mf-button-primary{border-color:var(--primary);background:var(--primary);color:#fff}.mf-button-primary:hover{background:var(--primary-dark)}
+
 @media(max-width:650px){
 #mf-image-tool{padding:8px}.mf-title{font-size:20px}.mf-preview-card{padding:8px}
 .mf-buttons{grid-template-columns:1fr}.mf-input-row{grid-template-columns:1fr 1fr}
@@ -68,14 +83,28 @@ background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touc
 </head>
 <body>
 <div id="mf-image-tool">
-<div class="mf-header"><div><h1 class="mf-title">مصغر وضاغط الصور</h1><p class="mf-subtitle">تغيير الأبعاد وضغط الصور وتحويل الصيغة مع مقارنة دقيقة قبل وبعد</p></div><button type="button" class="mf-theme" id="mfTheme">☀</button></div>
+<!-- روابط التواصل الاجتماعي في أعلى الصفحة -->
+<div class="mf-social-bar">
+<a href="https://www.youtube.com/@MajdFatihy" target="_blank" class="mf-social-btn">📺 يوتيوب</a>
+<a href="https://www.facebook.com/majdfatihy98" target="_blank" class="mf-social-btn">👥 فيسبوك</a>
+<a href="https://www.linkedin.com/in/majd-medical-procurement" target="_blank" class="mf-social-btn">💼 لينكد إن</a>
+<a href="https://www.tiktok.com/@majdfatihy" target="_blank" class="mf-social-btn">🎵 تيك توك</a>
+</div>
+
+<div class="mf-header"><div><h1 class="mf-title">مصغر وضاغط الصور</h1><p class="mf-subtitle"></p></div><button type="button" class="mf-theme" id="mfTheme">☀</button></div>
+
+<!-- صندوق الرفع الكبير الأساسي -->
 <label class="mf-upload" id="mfUpload"><input type="file" id="mfFile" accept="image/jpeg,image/png,image/webp,image/avif,image/gif"><div class="mf-upload-icon">🖼️</div><div class="mf-upload-title">اسحب الصورة هنا أو اضغط لاختيار صورة</div><div class="mf-upload-text">JPG / PNG / WebP / AVIF</div></label>
+
+<!-- الشريط الرفيع البديل الذي يظهر بعد رفع الصورة -->
+<label class="mf-drop-mini" id="mfDropMini"><input type="file" id="mfFileMini" accept="image/jpeg,image/png,image/webp,image/avif,image/gif">📁اضف صورة جديدة</label>
+
 <div class="mf-main" id="mfMain">
 <div class="mf-preview-card">
 <div class="mf-preview-head"><div class="mf-preview-title">مقارنة قبل وبعد</div><div class="mf-preview-help">اسحب المؤشر للمقارنة</div></div>
 <div class="mf-comparison" id="mfComparison">
 <canvas id="mfAfter" class="mf-after"></canvas><canvas id="mfBefore" class="mf-before"></canvas>
-<div class="mf-before-label">BEFORE</div><div class="mf-after-label">AFTER</div><div class="mf-divider" id="mfDivider"></div><div class="mf-handle" id="mfHandle">↔</div>
+<div class="mf-before-label">بعد</div><div class="mf-after-label">قبل</div><div class="mf-divider" id="mfDivider"></div><div class="mf-handle" id="mfHandle">↔</div>
 <input type="range" id="mfCompare" class="mf-compare" min="0" max="100" value="50">
 </div>
 <div class="mf-controls">
@@ -87,6 +116,9 @@ background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touc
 <div class="mf-size-box mf-size-after" id="mfAfterSizeBox"><div class="mf-size-label">بعد</div><div class="mf-size-value" id="mfAfterSize">—</div></div>
 </div>
 <div class="mf-saving" id="mfSaving">—</div>
+
+<!-- أزرار التحكم -->
+<div class="mf-buttons"><button type="button" class="mf-button mf-button-primary" id="mfDownload">تحميل الصورة</button><button type="button" class="mf-button" id="mfReplace">صورة أخرى</button><button type="button" class="mf-button" id="mfReset">إعادة ضبط</button></div>
 </div>
 
 </div>
@@ -100,10 +132,9 @@ background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touc
 
 <div class="mf-card">
 <div class="mf-card-title">طرق تقليل حجم الصورة</div>
-<div class="mf-card-description">يتم تطبيق الطرق الممكنة داخل المتصفح دون رفع الصورة إلى خادم.</div>
+<div class="mf-card-description"></div>
 <div class="mf-methods">
 <label class="mf-method"><input type="checkbox" id="mfFormatMethod" checked><div><strong>التحويل إلى صيغة أكثر كفاءة</strong><span>WebP أو AVIF قد يعطيان حجمًا أصغر من JPEG/PNG في حالات كثيرة.</span></div></label>
-<label class="mf-method"><input type="checkbox" id="mfMetadataMethod" checked><div><strong>إزالة Metadata</strong><span>إنشاء ملف جديد من البكسلات يؤدي عادةً إلى عدم نقل Metadata الأصلية إلى الناتج.</span></div></label>
 <label class="mf-method"><input type="checkbox" id="mfSmartMethod"><div><strong>الضغط الذكي حسب الحجم المستهدف</strong><span>يبحث عن أعلى جودة ممكنة ضمن الحجم الذي تحدده.</span></div></label>
 </div>
 <div class="mf-target" id="mfTargetBox"><input class="mf-input" id="mfTargetSize" type="number" min="1" value="300" placeholder="الحجم"><select class="mf-select" id="mfTargetUnit"><option value="KB">KB</option><option value="MB">MB</option></select></div>
@@ -118,7 +149,6 @@ background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touc
 <div class="mf-lock-row"><button type="button" class="mf-option active" id="mfLock">🔒 قفل نسبة الأصل</button><button type="button" class="mf-option" id="mfOriginalRatio">نسبة الصورة الأصلية</button></div>
 </div>
 <div class="mf-status" id="mfStatus"></div>
-<div class="mf-buttons"><button type="button" class="mf-button mf-button-primary" id="mfDownload">تحميل الصورة</button><button type="button" class="mf-button" id="mfReplace">صورة أخرى</button><button type="button" class="mf-button" id="mfReset">إعادة ضبط</button></div>
 </div>
 </div>
 </div>
@@ -126,16 +156,14 @@ background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touc
 <script>
 (function(){
 "use strict";
-const tool=document.getElementById("mf-image-tool"),fileInput=document.getElementById("mfFile"),upload=document.getElementById("mfUpload"),main=document.getElementById("mfMain");
+const tool=document.getElementById("mf-image-tool"),fileInput=document.getElementById("mfFile"),fileInputMini=document.getElementById("mfFileMini"),upload=document.getElementById("mfUpload"),dropMini=document.getElementById("mfDropMini"),main=document.getElementById("mfMain");
 const comparison=document.getElementById("mfComparison"),beforeCanvas=document.getElementById("mfBefore"),afterCanvas=document.getElementById("mfAfter"),divider=document.getElementById("mfDivider"),handle=document.getElementById("mfHandle"),compare=document.getElementById("mfCompare");
 const quality=document.getElementById("mfQuality"),qualityValue=document.getElementById("mfQualityValue"),widthInput=document.getElementById("mfWidth"),heightInput=document.getElementById("mfHeight"),lockButton=document.getElementById("mfLock"),originalRatioButton=document.getElementById("mfOriginalRatio"),formatSelect=document.getElementById("mfFormat");
-const qualityMethod=document.getElementById("mfQualityMethod"),formatMethod=document.getElementById("mfFormatMethod"),metadataMethod=document.getElementById("mfMetadataMethod"),smartMethod=document.getElementById("mfSmartMethod"),targetBox=document.getElementById("mfTargetBox"),targetSize=document.getElementById("mfTargetSize"),targetUnit=document.getElementById("mfTargetUnit");
+const qualityMethod=document.getElementById("mfQualityMethod"),formatMethod=document.getElementById("mfFormatMethod"),smartMethod=document.getElementById("mfSmartMethod"),targetBox=document.getElementById("mfTargetBox"),targetSize=document.getElementById("mfTargetSize"),targetUnit=document.getElementById("mfTargetUnit");
 const beforeSize=document.getElementById("mfBeforeSize"),afterSize=document.getElementById("mfAfterSize"),afterSizeBox=document.getElementById("mfAfterSizeBox"),saving=document.getElementById("mfSaving"),status=document.getElementById("mfStatus"),downloadButton=document.getElementById("mfDownload"),replaceButton=document.getElementById("mfReplace"),resetButton=document.getElementById("mfReset"),themeButton=document.getElementById("mfTheme");
 
 let source=null,sourceWidth=0,sourceHeight=0,sourceFile=null,sourceURL=null,resultBlob=null,renderTimer=null,ratioLocked=true,updatingDimensions=false,rendering=false,renderToken=0;
 const MAX_DIMENSION=10000,MAX_PIXELS=40000000;
-/* كانفاس غير مرئي يُستخدم فقط لإنتاج الصورة بالأبعاد الكاملة قبل ضغطها،
-   بحيث لا نضطر لرسمها على الشاشة قبل ضغطها فعلياً */
 const outputCanvas=document.createElement("canvas");
 
 function clamp(v,min,max){return Math.min(max,Math.max(min,v))}
@@ -207,6 +235,11 @@ function loadImage(file){
   widthInput.value=Math.max(1,Math.round(sourceWidth*initialScale));
   heightInput.value=Math.max(1,Math.round(sourceHeight*initialScale));
   beforeSize.textContent=bytesToText(file.size);
+  
+  // إخفاء الصندوق الكبير وإظهار الشريط المدمج الرفيع
+  upload.style.display="none";
+  dropMini.style.display="block";
+
   main.classList.add("active");render();
  }).catch(e=>{console.error(e);showStatus("تعذر قراءة الصورة.")});
 }
@@ -233,8 +266,6 @@ function drawBeforePreview(){
 function canvasToBlob(canvas,mime,q){
  return new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error("Encoding failed")),mime,q))
 }
-/* يفك ترميز الـ blob المضغوط فعلياً حتى تعكس المعاينة آثار الضغط الحقيقية
-   (تكتلات JPEG/WebP، فقدان تفاصيل...) بدل عرض بكسلات غير مضغوطة */
 function decodeBlobToImage(blob){
  if(typeof createImageBitmap==="function"){
   return createImageBitmap(blob).catch(()=>decodeViaImageElement(blob));
@@ -271,7 +302,6 @@ async function processImage(){
   const d=getDimensions();
   comparison.style.aspectRatio=d.width+" / "+d.height;
 
-  // 1) نرسم الصورة بالأبعاد الكاملة على كانفاس غير مرئي، بلا أي رسم على الشاشة بعد
   outputCanvas.width=d.width;outputCanvas.height=d.height;
   const octx=outputCanvas.getContext("2d");
   octx.clearRect(0,0,d.width,d.height);
@@ -280,7 +310,6 @@ async function processImage(){
 
   drawBeforePreview();
 
-  // 2) نضغط فعلياً حسب الإعدادات
   const mime=resolveFormat();
   let q=Number(quality.value)/100,blob;
   if(smartMethod.checked){
@@ -293,7 +322,6 @@ async function processImage(){
   if(token!==renderToken)return;
   resultBlob=blob;
 
-  // 3) نفك ترميز الـ blob المضغوط ونرسمه في كانفاس "بعد" — هذا ما يجعل المعاينة حقيقية
   decoded=await decodeBlobToImage(blob);
   if(token!==renderToken)return;
   const{cw,ch}=sizeCanvasToContainer(afterCanvas);
@@ -324,7 +352,7 @@ widthInput.addEventListener("input",()=>{
  render()
 });
 heightInput.addEventListener("input",()=>{
- if(ratioLocked&&!updatingDimensions&&sourceWidth&&sourceHeight){const h=Number(heightInput.value);if(h>0){updatingDimensions=true;widthInput.value=Math.max(1,Math.round(h*sourceWidth/sourceHeight));updatingDimensions=false}}
+ if(ratioLocked&&!updatingDimensions&&sourceWidth&&sourceHeight){const h=Number(heightInput.value);if(h>0){updatingDimensions=true;widthInput.value=Math.max(1,Math.round(h*sourceWidth/sourceWidth));updatingDimensions=false}}
  render()
 });
 lockButton.addEventListener("click",()=>{
@@ -335,17 +363,25 @@ originalRatioButton.addEventListener("click",()=>{
 });
 smartMethod.addEventListener("change",()=>{targetBox.classList.toggle("show",smartMethod.checked);updateQualityUI();render()});
 targetSize.addEventListener("input",render);targetUnit.addEventListener("change",render);
-[formatSelect,qualityMethod,formatMethod,metadataMethod].forEach(el=>{el.addEventListener("input",render);el.addEventListener("change",render)});
+[formatSelect,qualityMethod,formatMethod].forEach(el=>{el.addEventListener("input",render);el.addEventListener("change",render)});
 compare.addEventListener("input",updateComparison);
+
 fileInput.addEventListener("change",()=>{if(fileInput.files&&fileInput.files.length)loadImage(fileInput.files[0])});
+fileInputMini.addEventListener("change",()=>{if(fileInputMini.files&&fileInputMini.files.length)loadImage(fileInputMini.files[0])});
+
 upload.addEventListener("dragover",e=>{e.preventDefault();upload.classList.add("dragover")});
 upload.addEventListener("dragleave",()=>upload.classList.remove("dragover"));
 upload.addEventListener("drop",e=>{e.preventDefault();upload.classList.remove("dragover");if(e.dataTransfer.files&&e.dataTransfer.files.length)loadImage(e.dataTransfer.files[0])});
-replaceButton.addEventListener("click",()=>{fileInput.value="";fileInput.click()});
+
+dropMini.addEventListener("dragover",e=>{e.preventDefault();dropMini.classList.add("dragover")});
+dropMini.addEventListener("dragleave",()=>dropMini.classList.remove("dragover"));
+dropMini.addEventListener("drop",e=>{e.preventDefault();dropMini.classList.remove("dragover");if(e.dataTransfer.files&&e.dataTransfer.files.length)loadImage(e.dataTransfer.files[0])});
+
+replaceButton.addEventListener("click",()=>{fileInputMini.value="";fileInputMini.click()});
 resetButton.addEventListener("click",()=>{
  quality.value=85;qualityValue.textContent="85%";
  formatSelect.value="auto";
- qualityMethod.checked=true;formatMethod.checked=true;metadataMethod.checked=true;smartMethod.checked=false;
+ qualityMethod.checked=true;formatMethod.checked=true;smartMethod.checked=false;
  targetBox.classList.remove("show");
  updateQualityUI();
  compare.value=50;ratioLocked=true;
