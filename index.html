@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>أداة ضغط الصور لبلوجر وتصغير حجم الصور للمقالات أونلاين مجاناً</title>
-  <meta name="google-site-verification" content="8Wc-WW0GDDFQeEGq5t7WS6TQupr4-s1fpRUZ5J1-TIo" />
+<meta name="google-site-verification" content="8Wc-WW0GDDFQeEGq5t7WS6TQupr4-s1fpRUZ5J1-TIo" />
 <meta name="description" content="أداة مجانية مخصصة لكتاب بلوجر ومدوني المواقع لضغط وتقليل حجم الصور (JPG, PNG, WebP) وتغيير أبعادها لتسريع سرعة تحميل المقالات وصفحات المدونة وتحسين السيو التقني بدون رفعها لخادم خارجي.">
 <meta name="keywords" content="ضغط الصور لبلوجر, تصغير صور المقالات, تسريع مدونة بلوجر, ضغط صور الويب, تقليل حجم صور التدوينات, image compressor for blogger">
 <link rel="canonical" href="https://majdfatihy.github.io/image-compressor/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>">
 
 <meta property="og:title" content="أداة ضغط وتصغير الصور لمقالات بلوجر وتسريع المدونات">
 <meta property="og:description" content="صغر صور مقالات بلوجر وحسن سرعة مدونتك SEO أونلاين وبكل سهولة وبدون رفعها لأي سيرفر خارجي.">
@@ -31,45 +32,62 @@
 }
 </script>
 <style>
-:root {
-  --bg: #f4f6f8;
-  --card: #fff;
-  --text: #17202a;
-  --muted: #68737d;
-  --border: #dce2e7;
-  --primary: #e87524;
+:root { 
+  --bg: #f4f6f8; 
+  --card: #fff; 
+  --text: #17202a; 
+  --muted: #68737d; 
+  --border: #dce2e7; 
+  --primary: #e87524; 
   --primary-dark: #c85d12;
   --success: #218653;
   --danger: #d74646;
 }
 
-body.mf-dark-mode {
-  --bg: #11161b;
-  --card: #1b2127;
-  --text: #f2f4f5;
-  --muted: #aeb7bf;
-  --border: #303941;
-  background-color: var(--bg);
-  color: var(--text);
+[data-theme="dark"] { 
+  --bg: #11161b; 
+  --card: #1b2127; 
+  --text: #f2f4f5; 
+  --muted: #aeb7bf; 
+  --border: #303941; 
 }
 
-#mf-image-tool, #mf-image-tool * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); font-family: Tahoma, Arial, "Noto Sans Arabic", sans-serif; transition: background 0.3s ease, color 0.3s ease; }
+body { 
+  margin: 0; 
+  background: var(--bg); 
+  color: var(--text); 
+  font-family: Tahoma, Arial, "Noto Sans Arabic", sans-serif; 
+  display: flex; 
+  flex-direction: column; 
+  min-height: 100vh; 
+  padding-top: 70px; 
+  padding-bottom: 70px; 
+  transition: background 0.3s, color 0.3s; 
+}
 
+#progressBar { position: fixed; top: 0; left: 0; height: 3px; background: var(--primary); width: 0%; z-index: 10001; transition: width 0.1s; }
+header { position: fixed; top: 0; left: 0; right: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.container-nav { max-width: 1180px; margin: 0 auto; width: 100%; padding: 0 16px; box-sizing: border-box; }
+.nav-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
+.nav-links { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+.nav-bar a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.2s; }
+.nav-bar a:hover, .nav-bar a.active { color: var(--primary); }
+.theme-toggle { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+
+#mf-image-tool, #mf-image-tool * { box-sizing: border-box; }
 #mf-image-tool {
   width: 100%; max-width: 1180px; margin: 0 auto; padding: 16px;
-  background: var(--bg); color: var(--text); direction: rtl; min-height: 100vh;
+  background: var(--bg); color: var(--text); direction: rtl; min-height: auto;
 }
 
 .mf-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
 .mf-title-area { display: flex; flex-direction: column; }
 .mf-title { margin: 0; font-size: 24px; font-weight: 800; color: var(--text); }
 .mf-subtitle { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
-.mf-theme { width: 42px; height: 42px; flex: 0 0 42px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); color: var(--text); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; }
 
 /* أزرار التواصل الاجتماعي العلوية */
 .mf-social-bar { display: flex; gap: 8px; margin-top: 20px; margin-bottom: 14px; flex-wrap: wrap; }
-  .mf-social-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 9px; background: var(--card); color: var(--text); text-decoration: none; font-size: 12px; font-weight: 700; transition: .2s; }
+.mf-social-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 9px; background: var(--card); color: var(--text); text-decoration: none; font-size: 12px; font-weight: 700; transition: .2s; }
 .mf-social-btn:hover { border-color: var(--primary); color: var(--primary); }
 
 .mf-upload { display: block; width: 100%; padding: 34px 18px; border: 2px dashed var(--border); border-radius: 16px; background: var(--card); text-align: center; cursor: pointer; }
@@ -99,8 +117,8 @@ body { margin: 0; background: var(--bg); font-family: Tahoma, Arial, "Noto Sans 
 .mf-after-label { left: 10px; }
 .mf-compare { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 10; }
 .mf-controls { margin-top: 12px; display: grid; gap: 10px; }
-.mf-card { padding: 13px; border: 1px solid var(--border); border-radius: 13px; background: var(--card); color: var(--text); }
-.mf-card-title { margin-bottom: 8px; font-size: 14px; font-weight: 800; color: var(--text); }
+.mf-card { padding: 13px; border: 1px solid var(--border); border-radius: 13px; background: var(--card); color: var(--text); margin-bottom: 10px; }
+.mf-card-title { margin-bottom: 8px; font-size: 14px; font-weight: 800; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
 .mf-card-description { margin-top: -3px; margin-bottom: 9px; color: var(--muted); font-size: 11px; }
 .mf-quality-toggle { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; font-size: 14px; font-weight: 800; color: var(--text); }
 .mf-quality-toggle input { accent-color: var(--primary); margin: 0; }
@@ -141,19 +159,22 @@ body { margin: 0; background: var(--bg); font-family: Tahoma, Arial, "Noto Sans 
 
 /* القسم الإرشادي السفلي */
 .seo-guide-section {
-  margin-top: 40px; padding: 25px; 
-  background: var(--card); 
-  border: 1px solid var(--border); 
-  border-radius: 12px; 
-  font-family: inherit; line-height: 1.6;
-  color: var(--text);
-  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    margin-top: 40px; padding: 25px; 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    border-radius: 12px; 
+    font-family: inherit; line-height: 1.6;
+    color: var(--text);
 }
 .seo-guide-section h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 15px; font-weight: 700; }
 .seo-guide-section p { color: var(--muted); margin-bottom: 12px; }
 .seo-guide-section h3 { font-size: 1.1rem; color: var(--text); margin-top: 20px; margin-bottom: 10px; font-weight: 600; }
 .seo-guide-section ul { padding-right: 20px; color: var(--muted); }
 .seo-guide-section li strong { color: var(--text); }
+
+#scrollTopBtn { position: fixed; bottom: 20px; left: 20px; background: var(--primary); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: none; align-items: center; justify-content: center; z-index: 999; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+footer { background: var(--card); border-top: 1px solid var(--border); padding: 25px 0; text-align: center; font-size: 13px; color: var(--muted); margin-top: 40px; }
+.footer-social { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
 
 @media(max-width:650px){
   #mf-image-tool { padding: 8px; }
@@ -163,8 +184,32 @@ body { margin: 0; background: var(--bg); font-family: Tahoma, Arial, "Noto Sans 
   .mf-input-row { grid-template-columns: 1fr 1fr; }
 }
 </style>
+<script>
+  (function() {
+    const savedTheme = localStorage.getItem('mf_theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', savedTheme ? savedTheme : (systemDark ? 'dark' : 'light'));
+  })();
+</script>
 </head>
 <body>
+
+  <div id="progressBar"></div>
+
+  <header>
+    <div class="container-nav">
+      <nav class="nav-bar">
+        <div class="nav-links">
+          <a href="https://majdfatihy.github.io/image-compressor/" class="active">🏠 الرئيسية</a>
+          <a href="privacy.html">سياسة الخصوصية</a>
+          <a href="about.html">من نحن</a>
+          <a href="contact.html">اتصل بنا</a>
+        </div>
+        <button class="theme-toggle" onclick="toggleThemeManual()" id="themeBtn">🌓 الوضع الليلي</button>
+      </nav>
+    </div>
+  </header>
+
 <main id="mf-image-tool">
 <div class="mf-social-bar">
 <a href="https://www.youtube.com/@MajdFatihy" target="_blank" class="mf-social-btn">📺 يوتيوب</a>
@@ -178,7 +223,6 @@ body { margin: 0; background: var(--bg); font-family: Tahoma, Arial, "Noto Sans 
     <h1 class="mf-title">مصغر وضاغط الصور</h1>
     <p class="mf-subtitle"></p>
   </div>
-  <button type="button" class="mf-theme" id="mfTheme">☀</button>
 </div>
 
 <label class="mf-upload" id="mfUpload"><input type="file" id="mfFile" accept="image/jpeg,image/png,image/webp,image/avif,image/gif"><div class="mf-upload-icon">🖼️</div><div class="mf-upload-title">اسحب الصورة هنا أو اضغط لاختيار صورة</div><div class="mf-upload-text">JPG / PNG / WebP / AVIF</div></label>
@@ -253,34 +297,66 @@ body { margin: 0; background: var(--bg); font-family: Tahoma, Arial, "Noto Sans 
 </section>
 </main>
 
+<button id="scrollTopBtn" onclick="scrollToTop()" title="الصعود لأعلى">⬆</button>
+
+<footer>
+  <div class="container-nav">
+    <p>جميع الحقوق محفوظة © 2026 - أداة ضغط الصور</p>
+    <div class="footer-social">
+      <a href="https://www.youtube.com/@MajdFatihy" target="_blank" class="mf-social-btn" style="font-size: 11px; padding: 5px 10px;">📺 يوتيوب</a>
+      <a href="https://www.facebook.com/majdfatihy98" target="_blank" class="mf-social-btn" style="font-size: 11px; padding: 5px 10px;">👥 فيسبوك</a>
+      <a href="https://www.linkedin.com/in/majd-medical-procurement" target="_blank" class="mf-social-btn" style="font-size: 11px; padding: 5px 10px;">💼 لينكد إن</a>
+      <a href="https://www.tiktok.com/@majdfatihy" target="_blank" class="mf-social-btn" style="font-size: 11px; padding: 5px 10px;">🎵 تيك توك</a>
+    </div>
+  </div>
+</footer>
+
 <script>
+function toggleThemeManual() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const nxt = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('mf_theme', nxt);
+  updateThemeBtn(nxt);
+}
+
+function updateThemeBtn(theme) {
+  const btn = document.getElementById('themeBtn');
+  if(btn) btn.innerHTML = theme === 'dark' ? '☀️ الوضع النهاري' : '🌓 الوضع الليلي';
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  const progressEl = document.getElementById("progressBar");
+  if(progressEl) progressEl.style.width = scrolled + "%";
+
+  const btn = document.getElementById('scrollTopBtn');
+  if (btn) {
+    if (winScroll > 300) {
+      btn.style.display = 'flex';
+    } else {
+      btn.style.display = 'none';
+    }
+  }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  updateThemeBtn(document.documentElement.getAttribute('data-theme'));
+});
+
 (function(){
 "use strict";
 const tool=document.getElementById("mf-image-tool"),fileInput=document.getElementById("mfFile"),fileInputMini=document.getElementById("mfFileMini"),upload=document.getElementById("mfUpload"),dropMini=document.getElementById("mfDropMini"),main=document.getElementById("mfMain");
 const comparison=document.getElementById("mfComparison"),beforeCanvas=document.getElementById("mfBefore"),afterCanvas=document.getElementById("mfAfter"),divider=document.getElementById("mfDivider"),handle=document.getElementById("mfHandle"),compare=document.getElementById("mfCompare");
 const quality=document.getElementById("mfQuality"),qualityValue=document.getElementById("mfQualityValue"),widthInput=document.getElementById("mfWidth"),heightInput=document.getElementById("mfHeight"),lockButton=document.getElementById("mfLock"),originalRatioButton=document.getElementById("mfOriginalRatio"),formatSelect=document.getElementById("mfFormat");
 const qualityMethod=document.getElementById("mfQualityMethod"),formatMethod=document.getElementById("mfFormatMethod"),smartMethod=document.getElementById("mfSmartMethod"),targetBox=document.getElementById("mfTargetBox"),targetSize=document.getElementById("mfTargetSize"),targetUnit=document.getElementById("mfTargetUnit");
-const beforeSize=document.getElementById("mfBeforeSize"),afterSize=document.getElementById("mfAfterSize"),afterSizeBox=document.getElementById("mfAfterSizeBox"),saving=document.getElementById("mfSaving"),status=document.getElementById("mfStatus"),downloadButton=document.getElementById("mfDownload"),replaceButton=document.getElementById("mfReplace"),resetButton=document.getElementById("mfReset"),themeButton=document.getElementById("mfTheme");
-
-function applyTheme(isDark) {
-  if (isDark) {
-    document.body.classList.add("mf-dark-mode");
-    themeButton.textContent = "☾";
-  } else {
-    document.body.classList.remove("mf-dark-mode");
-    themeButton.textContent = "☀";
-  }
-}
-
-// الكشف التلقائي عن وضع النظام
-const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-applyTheme(prefersDark);
-
-// التبديل اليدوي عبر الزر
-themeButton.addEventListener("click", () => {
-  const isCurrentlyDark = document.body.classList.contains("mf-dark-mode");
-  applyTheme(!isCurrentlyDark);
-});
+const beforeSize=document.getElementById("mfBeforeSize"),afterSize=document.getElementById("mfAfterSize"),afterSizeBox=document.getElementById("mfAfterSizeBox"),saving=document.getElementById("mfSaving"),status=document.getElementById("mfStatus"),downloadButton=document.getElementById("mfDownload"),replaceButton=document.getElementById("mfReplace"),resetButton=document.getElementById("mfReset");
 
 let source=null,sourceWidth=0,sourceHeight=0,sourceFile=null,sourceURL=null,resultBlob=null,renderTimer=null,ratioLocked=true,updatingDimensions=false,rendering=false,renderToken=0;
 const MAX_DIMENSION=10000,MAX_PIXELS=40000000;
