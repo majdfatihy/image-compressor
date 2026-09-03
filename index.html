@@ -30,79 +30,136 @@
 }
 </script>
 <style>
-#mf-image-tool,#mf-image-tool *{box-sizing:border-box}
-body{margin:0;background:var(--bg);font-family:Tahoma,Arial,"Noto Sans Arabic",sans-serif;}
-#mf-image-tool{
---bg:#f4f6f8;--card:#fff;--text:#17202a;--muted:#68737d;
---border:#dce2e7;--primary:#e87524;--primary-dark:#c85d12;
---success:#218653;--danger:#d74646;
-width:100%;max-width:1180px;margin:0 auto;padding:16px;
-background:var(--bg);color:var(--text);direction:rtl;min-height:100vh;
+:root {
+  --bg: #f4f6f8;
+  --card: #fff;
+  --text: #17202a;
+  --muted: #68737d;
+  --border: #dce2e7;
+  --primary: #e87524;
+  --primary-dark: #c85d12;
+  --success: #218653;
+  --danger: #d74646;
 }
-#mf-image-tool.mf-dark{--bg:#11161b;--card:#1b2127;--text:#f2f4f5;--muted:#aeb7bf;--border:#303941}
-body:has(#mf-image-tool.mf-dark){background:#11161b;}
-.mf-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
-.mf-title{margin:0;font-size:24px;font-weight:800}.mf-subtitle{margin:4px 0 0;color:var(--muted);font-size:13px}
-.mf-theme{width:42px;height:42px;flex:0 0 42px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);cursor:pointer;font-size:18px}
+
+body.mf-dark-mode {
+  --bg: #11161b;
+  --card: #1b2127;
+  --text: #f2f4f5;
+  --muted: #aeb7bf;
+  --border: #303941;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+#mf-image-tool, #mf-image-tool * { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); font-family: Tahoma, Arial, "Noto Sans Arabic", sans-serif; transition: background 0.3s ease, color 0.3s ease; }
+
+#mf-image-tool {
+  width: 100%; max-width: 1180px; margin: 0 auto; padding: 16px;
+  background: var(--bg); color: var(--text); direction: rtl; min-height: 100vh;
+}
+
+.mf-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.mf-title-area { display: flex; flex-direction: column; }
+.mf-title { margin: 0; font-size: 24px; font-weight: 800; color: var(--text); }
+.mf-subtitle { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+.mf-theme { width: 42px; height: 42px; flex: 0 0 42px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); color: var(--text); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; }
 
 /* أزرار التواصل الاجتماعي العلوية */
-.mf-social-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.mf-social-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);text-decoration:none;font-size:12px;font-weight:700;transition:.2s;}
-.mf-social-btn:hover{border-color:var(--primary);color:var(--primary);}
+.mf-social-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.mf-social-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 9px; background: var(--card); color: var(--text); text-decoration: none; font-size: 12px; font-weight: 700; transition: .2s; }
+.mf-social-btn:hover { border-color: var(--primary); color: var(--primary); }
 
-.mf-upload{display:block;width:100%;padding:34px 18px;border:2px dashed var(--border);border-radius:16px;background:var(--card);text-align:center;cursor:pointer}
-.mf-upload:hover,.mf-upload.dragover,.mf-drop-mini:hover{border-color:var(--primary);background:rgba(232,117,36,.06)}
-.mf-upload input,.mf-drop-mini input{display:none}.mf-upload-icon{font-size:42px}.mf-upload-title{margin-top:8px;font-size:18px;font-weight:800}.mf-upload-text{margin-top:5px;color:var(--muted);font-size:13px}
+.mf-upload { display: block; width: 100%; padding: 34px 18px; border: 2px dashed var(--border); border-radius: 16px; background: var(--card); text-align: center; cursor: pointer; }
+.mf-upload:hover, .mf-upload.dragover, .mf-drop-mini:hover { border-color: var(--primary); background: rgba(232,117,36,.06); }
+.mf-upload input, .mf-drop-mini input { display: none; }
+.mf-upload-icon { font-size: 42px; }
+.mf-upload-title { margin-top: 8px; font-size: 18px; font-weight: 800; color: var(--text); }
+.mf-upload-text { margin-top: 5px; color: var(--muted); font-size: 13px; }
 
 /* الشريط الرفيع البديل */
-.mf-drop-mini{display:none;width:100%;padding:14px;border:2px dashed var(--border);border-radius:12px;text-align:center;background:var(--card);cursor:pointer;margin-bottom:14px;font-size:13px;font-weight:700;color:var(--muted);}
+.mf-drop-mini { display: none; width: 100%; padding: 14px; border: 2px dashed var(--border); border-radius: 12px; text-align: center; background: var(--card); cursor: pointer; margin-bottom: 14px; font-size: 13px; font-weight: 700; color: var(--muted); }
 
-.mf-main{display:none;margin-top:14px}.mf-main.active{display:block}
-.mf-preview-card{width:100%;padding:12px;border:1px solid var(--border);border-radius:16px;background:var(--card)}
-.mf-preview-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.mf-preview-title{font-size:15px;font-weight:800}.mf-preview-help{color:var(--muted);font-size:11px}
-.mf-comparison{position:relative;width:100%;max-height:65vh;overflow:hidden;border-radius:12px;background:
-linear-gradient(45deg,#ddd 25%,transparent 25%),linear-gradient(-45deg,#ddd 25%,transparent 25%),
-linear-gradient(45deg,transparent 75%,#ddd 75%),linear-gradient(-45deg,transparent 75%,#ddd 75%);
-background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touch-action:none;user-select:none}
-.mf-comparison canvas{display:block;position:absolute;inset:0;width:100%;height:100%}
-.mf-before{z-index:2;clip-path:inset(0 50% 0 0)}.mf-after{z-index:1}
-.mf-divider{position:absolute;top:0;bottom:0;left:50%;width:3px;transform:translateX(-50%);background:#fff;box-shadow:0 0 8px rgba(0,0,0,.35);z-index:6;pointer-events:none}
-.mf-handle{position:absolute;top:50%;left:50%;width:44px;height:44px;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;color:#222;font-weight:900;box-shadow:0 4px 15px rgba(0,0,0,.25);z-index:7;pointer-events:none}
-.mf-before-label,.mf-after-label{position:absolute;top:10px;padding:5px 8px;border-radius:6px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;z-index:8}
-.mf-before-label{right:10px}.mf-after-label{left:10px}
-.mf-compare{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;z-index:10}
-.mf-controls{margin-top:12px;display:grid;gap:10px}.mf-card{padding:13px;border:1px solid var(--border);border-radius:13px;background:var(--card)}
-.mf-card-title{margin-bottom:8px;font-size:14px;font-weight:800}.mf-card-description{margin-top:-3px;margin-bottom:9px;color:var(--muted);font-size:11px}
-.mf-quality-toggle{display:inline-flex;align-items:center;gap:7px;cursor:pointer;font-size:14px;font-weight:800}
-.mf-quality-toggle input{accent-color:var(--primary);margin:0}
-.mf-quality-row{display:flex;align-items:center;gap:10px}.mf-range{width:100%;margin:0;accent-color:var(--primary)}
-.mf-value{min-width:52px;color:var(--primary);font-size:13px;font-weight:800;text-align:center}
-.mf-size-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.mf-size-box{padding:9px 10px;border:1px solid var(--border);border-radius:10px;text-align:center}
-.mf-size-label{font-size:10px;color:var(--muted)}.mf-size-value{margin-top:2px;font-size:14px;font-weight:800}
-.mf-size-before .mf-size-value{color:var(--danger)}.mf-size-after .mf-size-value{color:var(--success)}
-.mf-size-after.is-larger .mf-size-value{color:var(--danger)}
-.mf-saving{text-align:center;margin-top:7px;font-size:12px;font-weight:800;color:var(--success)}
-.mf-saving.is-larger{color:var(--danger)}
-.mf-input-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mf-field label{display:block;margin-bottom:4px;color:var(--muted);font-size:11px}
-.mf-input,.mf-select{width:100%;height:42px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);padding:0 10px;outline:none}
-.mf-input:focus,.mf-select:focus{border-color:var(--primary)}
-.mf-lock-row{display:flex;gap:7px;margin-top:8px}.mf-option{flex:1;min-height:37px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);cursor:pointer;font-size:11px}
-.mf-option.active{border-color:var(--primary);color:var(--primary);background:rgba(232,117,36,.08)}
-.mf-methods{display:grid;gap:7px}.mf-method{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;padding:9px;border:1px solid var(--border);border-radius:9px}
-.mf-method input{margin-top:3px;accent-color:var(--primary)}.mf-method strong{display:block;font-size:12px}.mf-method span{display:block;margin-top:2px;color:var(--muted);font-size:10px}
-.mf-target{display:none;grid-template-columns:1fr 100px;gap:8px;margin-top:8px}.mf-target.show{display:grid}
-.mf-status{display:none;margin-top:9px;padding:9px;border-radius:9px;background:rgba(33,134,83,.09);color:var(--success);font-size:11px}
-.mf-status.show{display:block}
+.mf-main { display: none; margin-top: 14px; }
+.mf-main.active { display: block; }
+.mf-preview-card { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--card); }
+.mf-preview-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.mf-preview-title { font-size: 15px; font-weight: 800; color: var(--text); }
+.mf-preview-help { color: var(--muted); font-size: 11px; }
+.mf-comparison { position: relative; width: 100%; max-height: 65vh; overflow: hidden; border-radius: 12px; background: linear-gradient(45deg,#ddd 25%,transparent 25%), linear-gradient(-45deg,#ddd 25%,transparent 25%), linear-gradient(45deg,transparent 75%,#ddd 75%), linear-gradient(-45deg,transparent 75%,#ddd 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0; touch-action: none; user-select: none; }
+.mf-comparison canvas { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+.mf-before { z-index: 2; clip-path: inset(0 50% 0 0); }
+.mf-after { z-index: 1; }
+.mf-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; transform: translateX(-50%); background: #fff; box-shadow: 0 0 8px rgba(0,0,0,.35); z-index: 6; pointer-events: none; }
+.mf-handle { position: absolute; top: 50%; left: 50%; width: 44px; height: 44px; transform: translate(-50%,-50%); display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #fff; color: #222; font-weight: 900; box-shadow: 0 4px 15px rgba(0,0,0,.25); z-index: 7; pointer-events: none; }
+.mf-before-label, .mf-after-label { position: absolute; top: 10px; padding: 5px 8px; border-radius: 6px; background: rgba(0,0,0,.6); color: #fff; font-size: 10px; z-index: 8; }
+.mf-before-label { right: 10px; }
+.mf-after-label { left: 10px; }
+.mf-compare { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 10; }
+.mf-controls { margin-top: 12px; display: grid; gap: 10px; }
+.mf-card { padding: 13px; border: 1px solid var(--border); border-radius: 13px; background: var(--card); color: var(--text); }
+.mf-card-title { margin-bottom: 8px; font-size: 14px; font-weight: 800; color: var(--text); }
+.mf-card-description { margin-top: -3px; margin-bottom: 9px; color: var(--muted); font-size: 11px; }
+.mf-quality-toggle { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; font-size: 14px; font-weight: 800; color: var(--text); }
+.mf-quality-toggle input { accent-color: var(--primary); margin: 0; }
+.mf-quality-row { display: flex; align-items: center; gap: 10px; color: var(--text); }
+.mf-range { width: 100%; margin: 0; accent-color: var(--primary); }
+.mf-value { min-width: 52px; color: var(--primary); font-size: 13px; font-weight: 800; text-align: center; }
+.mf-size-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.mf-size-box { padding: 9px 10px; border: 1px solid var(--border); border-radius: 10px; text-align: center; background: var(--card); }
+.mf-size-label { font-size: 10px; color: var(--muted); }
+.mf-size-value { margin-top: 2px; font-size: 14px; font-weight: 800; }
+.mf-size-before .mf-size-value { color: var(--danger); }
+.mf-size-after .mf-size-value { color: var(--success); }
+.mf-size-after.is-larger .mf-size-value { color: var(--danger); }
+.mf-saving { text-align: center; margin-top: 7px; font-size: 12px; font-weight: 800; color: var(--success); }
+.mf-saving.is-larger { color: var(--danger); }
+.mf-input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mf-field label { display: block; margin-bottom: 4px; color: var(--muted); font-size: 11px; }
+.mf-input, .mf-select { width: 100%; height: 42px; border: 1px solid var(--border); border-radius: 9px; background: var(--card); color: var(--text); padding: 0 10px; outline: none; }
+.mf-input:focus, .mf-select:focus { border-color: var(--primary); }
+.mf-lock-row { display: flex; gap: 7px; margin-top: 8px; }
+.mf-option { flex: 1; min-height: 37px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); color: var(--text); cursor: pointer; font-size: 11px; }
+.mf-option.active { border-color: var(--primary); color: var(--primary); background: rgba(232,117,36,.08); }
+.mf-methods { display: grid; gap: 7px; }
+.mf-method { display: grid; grid-template-columns: 22px 1fr; gap: 8px; align-items: start; padding: 9px; border: 1px solid var(--border); border-radius: 9px; }
+.mf-method input { margin-top: 3px; accent-color: var(--primary); }
+.mf-method strong { display: block; font-size: 12px; color: var(--text); }
+.mf-method span { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; }
+.mf-target { display: none; grid-template-columns: 1fr 100px; gap: 8px; margin-top: 8px; }
+.mf-target.show { display: grid; }
+.mf-status { display: none; margin-top: 9px; padding: 9px; border-radius: 9px; background: rgba(33,134,83,.09); color: var(--success); font-size: 11px; }
+.mf-status.show { display: block; }
 
 /* الأزرار أسفل الضغط الفاقد */
-.mf-buttons{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-top:12px}
-.mf-button{min-height:43px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);cursor:pointer;font-weight:800}
-.mf-button-primary{border-color:var(--primary);background:var(--primary);color:#fff}.mf-button-primary:hover{background:var(--primary-dark)}
+.mf-buttons { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-top: 12px; }
+.mf-button { min-height: 43px; border: 1px solid var(--border); border-radius: 9px; background: var(--card); color: var(--text); cursor: pointer; font-weight: 800; }
+.mf-button-primary { border-color: var(--primary); background: var(--primary); color: #fff; }
+.mf-button-primary:hover { background: var(--primary-dark); }
+
+/* القسم الإرشادي السفلي (يتوافق الآن تلقائياً مع الوضع الليلي) */
+.seo-guide-section {
+  margin-top: 40px; padding: 25px; 
+  background: var(--card); 
+  border: 1px solid var(--border); 
+  border-radius: 12px; 
+  font-family: inherit; line-height: 1.6;
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.seo-guide-section h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 15px; font-weight: 700; }
+.seo-guide-section p { color: var(--muted); margin-bottom: 12px; }
+.seo-guide-section h3 { font-size: 1.1rem; color: var(--text); margin-top: 20px; margin-bottom: 10px; font-weight: 600; }
+.seo-guide-section ul { padding-right: 20px; color: var(--muted); }
+.seo-guide-section li strong { color: var(--text); }
 
 @media(max-width:650px){
-#mf-image-tool{padding:8px}.mf-title{font-size:20px}.mf-preview-card{padding:8px}
-.mf-buttons{grid-template-columns:1fr}.mf-input-row{grid-template-columns:1fr 1fr}
+  #mf-image-tool { padding: 8px; }
+  .mf-title { font-size: 20px; }
+  .mf-preview-card { padding: 8px; }
+  .mf-buttons { grid-template-columns: 1fr; }
+  .mf-input-row { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
@@ -115,7 +172,13 @@ background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touc
 <a href="https://www.tiktok.com/@majdfatihy" target="_blank" class="mf-social-btn">🎵 تيك توك</a>
 </div>
 
-<div class="mf-header"><div><h1 class="mf-title">مصغر وضاغط الصور</h1><p class="mf-subtitle"></p></div><button type="button" class="mf-theme" id="mfTheme">☀</button></div>
+<div class="mf-header">
+  <div class="mf-title-area">
+    <h1 class="mf-title">مصغر وضاغط الصور</h1>
+    <p class="mf-subtitle"></p>
+  </div>
+  <button type="button" class="mf-theme" id="mfTheme">☀</button>
+</div>
 
 <label class="mf-upload" id="mfUpload"><input type="file" id="mfFile" accept="image/jpeg,image/png,image/webp,image/avif,image/gif"><div class="mf-upload-icon">🖼️</div><div class="mf-upload-title">اسحب الصورة هنا أو اضغط لاختيار صورة</div><div class="mf-upload-text">JPG / PNG / WebP / AVIF</div></label>
 
@@ -172,18 +235,19 @@ background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touc
 <div class="mf-status" id="mfStatus"></div>
 </div>
 </div>
-<section class="seo-guide-section" style="margin-top: 40px; padding: 20px; background: #f9f9f9; border-radius: 8px; font-family: inherit; line-height: 1.6;">
-    <h2 style="font-size: 1.25rem; color: #333; margin-bottom: 15px;">لماذا تحتاج أدوات ضغط الصور عند التدوين على بلوجر؟</h2>
-    <p style="color: #555; margin-bottom: 12px;">
+
+<section class="seo-guide-section">
+    <h2>لماذا تحتاج أدوات ضغط الصور عند التدوين على بلوجر؟</h2>
+    <p>
         تعتبر سرعة التحميل من أهم عوامل السيو (SEO) الناجح لأي مدونة على منصة بلوجر (Blogger). الصور الكبيرة وغير المضغطة تتسبب في بطء فتح المقالات، مما يؤدي إلى زيادة معدل الارتداد وتراجع ترتيب المدونة في نتائج محركات البحث.
     </p>
     
-    <h3 style="font-size: 1.1rem; color: #444; margin-top: 20px; margin-bottom: 10px;">مميزات استخدام الأداة لصور المقالات:</h3>
-    <ul style="padding-right: 20px; color: #555;">
-        <li style="margin-bottom: 8px;"><strong>تسريع مدونة بلوجر:</strong> تقليل حجم ملفات الصور (JPG, PNG, WebP) يضمن فتح المقالات في أجزاء من الثانية.</li>
-        <li style="margin-bottom: 8px;"><strong>الحفاظ على الجودة البصرية:</strong> ضغط احترافي يقلل المساحة بالكيلوبايت دون التأثير على وضوح التفاصيل داخل صور التدوينات.</li>
-        <li style="margin-bottom: 8px;"><strong>الخصوصية التامة:</strong> تتم عملية المعالجة بالكامل محلياً داخل متصفحك دون الحاجة لرفع صورك الشخصية أو صور المقالات إلى أي خادم خارجي.</li>
-        <li style="margin-bottom: 8px;"><strong>موافقة معايير الويب:</strong> تساعدك في تجهيز الصور بالمقاسات والأنماط المناسبة لتجربة مستخدم مثالية على الهاتف والكمبيوتر.</li>
+    <h3>مميزات استخدام الأداة لصور المقالات:</h3>
+    <ul>
+        <li><strong>تسريع مدونة بلوجر:</strong> تقليل حجم ملفات الصور (JPG, PNG, WebP) يضمن فتح المقالات في أجزاء من الثانية.</li>
+        <li><strong>الحفاظ على الجودة البصرية:</strong> ضغط احترافي يقلل المساحة بالكيلوبايت دون التأثير على وضوح التفاصيل داخل صور التدوينات.</li>
+        <li><strong>الخصوصية التامة:</strong> تتم عملية المعالجة بالكامل محلياً داخل متصفحك دون الحاجة لرفع صورك الشخصية أو صور المقالات إلى أي خادم خارجي.</li>
+        <li><strong>موافقة معايير الويب:</strong> تساعدك في تجهيز الصور بالمقاسات والأنماط المناسبة لتجربة مستخدم مثالية على الهاتف والكمبيوتر.</li>
     </ul>
 </section>
 </div>
@@ -197,13 +261,25 @@ const quality=document.getElementById("mfQuality"),qualityValue=document.getElem
 const qualityMethod=document.getElementById("mfQualityMethod"),formatMethod=document.getElementById("mfFormatMethod"),smartMethod=document.getElementById("mfSmartMethod"),targetBox=document.getElementById("mfTargetBox"),targetSize=document.getElementById("mfTargetSize"),targetUnit=document.getElementById("mfTargetUnit");
 const beforeSize=document.getElementById("mfBeforeSize"),afterSize=document.getElementById("mfAfterSize"),afterSizeBox=document.getElementById("mfAfterSizeBox"),saving=document.getElementById("mfSaving"),status=document.getElementById("mfStatus"),downloadButton=document.getElementById("mfDownload"),replaceButton=document.getElementById("mfReplace"),resetButton=document.getElementById("mfReset"),themeButton=document.getElementById("mfTheme");
 
-// التفعيل التلقائي للوضع الليلي أو الفاتح حسب نظام تشغيل المستخدم
-if(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches){
-  tool.classList.add("mf-dark");
-  themeButton.textContent="☾";
-} else {
-  themeButton.textContent="☀";
+function applyTheme(isDark) {
+  if (isDark) {
+    document.body.classList.add("mf-dark-mode");
+    themeButton.textContent = "☾";
+  } else {
+    document.body.classList.remove("mf-dark-mode");
+    themeButton.textContent = "☀";
+  }
 }
+
+// الكشف التلقائي عن وضع النظام
+const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+applyTheme(prefersDark);
+
+// التبديل اليدوي عبر الزر
+themeButton.addEventListener("click", () => {
+  const isCurrentlyDark = document.body.classList.contains("mf-dark-mode");
+  applyTheme(!isCurrentlyDark);
+});
 
 let source=null,sourceWidth=0,sourceHeight=0,sourceFile=null,sourceURL=null,resultBlob=null,renderTimer=null,ratioLocked=true,updatingDimensions=false,rendering=false,renderToken=0;
 const MAX_DIMENSION=10000,MAX_PIXELS=40000000;
@@ -279,7 +355,6 @@ function loadImage(file){
   heightInput.value=Math.max(1,Math.round(sourceHeight*initialScale));
   beforeSize.textContent=bytesToText(file.size);
   
-  // إخفاء الصندوق الكبير وإظهار الشريط المدمج الرفيع
   upload.style.display="none";
   dropMini.style.display="block";
 
@@ -439,7 +514,6 @@ downloadButton.addEventListener("click",()=>{
  const d=getDimensions(),a=document.createElement("a"),url=URL.createObjectURL(resultBlob);
  a.href=url;a.download="image-"+d.width+"x-"+d.height+"."+mimeExtension(resultBlob.type);document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)
 });
-themeButton.addEventListener("click",()=>{tool.classList.toggle("mf-dark");themeButton.textContent=tool.classList.contains("mf-dark")?"☀":"☾"});
 window.addEventListener("resize",()=>{if(source){clearTimeout(renderTimer);renderTimer=setTimeout(processImage,100)}});
 updateQualityUI();
 updateComparison();
