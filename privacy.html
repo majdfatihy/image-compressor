@@ -1,94 +1,149 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سياسة الخصوصية - أداة ضغط الصور</title>
+<title>سياسة الخصوصية وملفات تعريف الارتباط - أداة ضغط الصور</title>
+<meta name="description" content="سياسة الخصوصية التفصيلية وشرح استخدام ملفات تعريف الارتباط Cookies وإعلانات جوجل أدسنس وطرق حماية بيانات زوار الموقع.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>">
 <style>
-:root { 
-  --bg: #f4f6f8; 
-  --card: #fff; 
-  --text: #17202a; 
-  --muted: #68737d; 
-  --border: #dce2e7; 
-  --primary: #e87524; 
-}
-@media (prefers-color-scheme: dark) {
-  :root { 
-    --bg: #11161b; 
-    --card: #1b2127; 
-    --text: #f2f4f5; 
-    --muted: #aeb7bf; 
-    --border: #303941; 
-  }
-}
-body { 
-  margin: 0; 
-  background: var(--bg); 
-  color: var(--text); 
-  font-family: Tahoma, Arial, sans-serif; 
-  padding: 20px; 
-}
-.container { 
-  max-width: 800px; 
-  margin: 20px auto; 
-}
-.back-btn { 
-  display: inline-block; 
-  margin-bottom: 20px; 
-  padding: 8px 16px; 
-  background: var(--card); 
-  color: var(--primary); 
-  border: 1px solid var(--border); 
-  border-radius: 8px; 
-  text-decoration: none; 
-  font-weight: bold; 
-  transition: 0.2s; 
-}
-.back-btn:hover { 
-  opacity: 0.8; 
-}
-.mf-static-page { 
-  padding: 30px; 
-  background: var(--card); 
-  border: 1px solid var(--border); 
-  border-radius: 16px; 
-  line-height: 1.8; 
-}
-.mf-static-page h1 { 
-  font-size: 22px; 
-  font-weight: 800; 
-  margin-bottom: 15px; 
-}
-.mf-static-page h2 { 
-  font-size: 16px; 
-  font-weight: 700; 
-  margin-top: 20px; 
-  margin-bottom: 10px; 
-}
-.mf-static-page p, .mf-static-page li { 
-  font-size: 14px; 
-  color: var(--muted); 
-  margin-bottom: 10px; 
-}
+:root { --bg: #f4f6f8; --card: #fff; --text: #17202a; --muted: #68737d; --border: #dce2e7; --primary: #e87524; }
+[data-theme="dark"] { --bg: #11161b; --card: #1b2127; --text: #f2f4f5; --muted: #aeb7bf; --border: #303941; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: Tahoma, Arial, sans-serif; display: flex; flex-direction: column; min-height: 100vh; padding-top: 70px; padding-bottom: 70px; transition: background 0.3s, color 0.3s; }
+#progressBar { position: fixed; top: 0; left: 0; height: 3px; background: var(--primary); width: 0%; z-index: 10001; transition: width 0.1s; }
+header { position: fixed; top: 0; left: 0; right: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.container { max-width: 900px; margin: 0 auto; width: 100%; padding: 0 20px; box-sizing: border-box; }
+.nav-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
+.nav-links { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+.nav-bar a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.2s; }
+.nav-bar a:hover, .nav-bar a.active { color: var(--primary); }
+.theme-toggle { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
+main { flex: 1; padding: 40px 0; }
+.content-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 35px; line-height: 1.9; }
+h1 { font-size: 24px; font-weight: 800; margin-bottom: 20px; color: var(--text); }
+h2 { font-size: 18px; font-weight: 700; margin-top: 25px; margin-bottom: 12px; color: var(--text); }
+p, li { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+ul { padding-right: 20px; }
+#scrollTopBtn { position: fixed; bottom: 20px; left: 20px; background: var(--primary); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: none; align-items: center; justify-content: center; z-index: 999; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+footer { background: var(--card); border-top: 1px solid var(--border); padding: 25px 0; text-align: center; font-size: 13px; color: var(--muted); margin-top: auto; }
+.social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+.mf-social-btn { padding: 6px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); text-decoration: none; font-size: 12px; font-weight: 600; }
+
+/* شريط الكوكيز المحسّن */
+#cookieConsentBar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--border); padding: 15px 25px; display: none; justify-content: space-between; align-items: center; gap: 15px; z-index: 10000; box-shadow: 0 -4px 15px rgba(0,0,0,0.15); flex-wrap: wrap; }
+#cookieConsentBar p { margin: 0; font-size: 13px; color: var(--text); line-height: 1.6; flex: 1; min-width: 250px; }
+#cookieConsentBar a { color: var(--primary); text-decoration: underline; }
+.cookie-btn { background: var(--primary); color: #fff; border: none; padding: 8px 18px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.2s; }
+.cookie-btn:hover { opacity: 0.9; }
 </style>
+<script>
+  (function() {
+    const savedTheme = localStorage.getItem('mf_theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', savedTheme ? savedTheme : (systemDark ? 'dark' : 'light'));
+  })();
+</script>
 </head>
 <body>
-<div class="container">
-    <a href="index.html" class="back-btn">← العودة إلى الصفحة الرئيسية</a>
-    <div class="mf-static-page">
-        <h1>سياسة الخصوصية</h1>
-        <p>تُعد خصوصية زوارنا ذات أهمية بالغة بالنسبة لنا. توضح وثيقة سياسة الخصوصية هذه أنواع المعلومات الشخصية التي تتلقاها وتجمعها أداة ضغط الصور وكيفية استخدامها.</p>
-        
-        <h2>معالجة الصور والخصوصية</h2>
-        <p>تتم عملية معالجة وضغط الصور بالكامل <strong>محلياً (Client-side)</strong> داخل متصفحك الشخصي باستخدام تقنيات JavaScript، ونحن لا نقوم نهائياً برفع أو تخزين أي صور تقوم بمعالجتها على خوادم خارجية.</p>
-        
-        <h2>ملفات الدخول (Log Files)</h2>
-        <p>مثل العديد من المواقع الأخرى، نستخدم ملفات الدخول التي تتضمن عنوان بروتوكول الإنترنت (IP)، نوع المتصفح، مزود خدمة الإنترنت، والتاريخ والوقت، وذلك لتحليل حركة الزوار.</p>
-        
-        <h2>إعلانات Google AdSense</h2>
-        <p>نستعين بشركات إعلانية كطرف ثالث مثل (Google AdSense) لعرض الإعلانات، والتي قد تستخدم ملفات تعريف الارتباط (Cookies) لتحسين تجربة الإعلانات بناءً على زياراتك للموقع.</p>
+
+  <div id="progressBar"></div>
+
+  <header>
+    <div class="container">
+      <nav class="nav-bar">
+        <div class="nav-links">
+          <a href="privacy.html" class="active">سياسة الخصوصية</a>
+          <a href="about.html">من نحن</a>
+          <a href="contact.html">اتصل بنا</a>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌓 الوضع الليلي</button>
+      </nav>
     </div>
-</div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="content-box">
+        <h1>سياسة الخصوصية وملفات تعريف الارتباط (Cookies)</h1>
+        <p>نحن في منصتنا نضع خصوصية زوارنا على رأس الأولويات والاهتمامات. توضح وثيقة سياسة الخصوصية هذه ماهية وطبيعة البيانات الشخصية التي يتم جمعها وكيفية استخدامه للأغراض التقنية والتحليلية والإعلانية تماشياً مع المعايير الدولية وقوانين حماية البيانات مثل اللائحة العامة لحماية البيانات (GDPR).</p>
+        
+        <h2>ملفات تعريف الارتباط (Cookies) وتفضيلات التصفح</h2>
+        <p>تُعد ملفات تعريف الارتباط ملفات نصية صغيرة يتم تخزينها على جهاز الكمبيوتر أو الهاتف الذكي الخاص بك عند زيارة مواقع الويب. نستخدم هذه الملفات في موقعنا بشكل أساسي لحفظ تفضيلات المظهر وتفعيل وضع الإضاءة المفضل لديك (الوضع الليلي أو النهاري) عبر التخزين المحلي للمتصفح (LocalStorage)، لكي يعمل الموقع بالهيئة المناسبة لك تلقائياً عند كل زيارة جديدة.</p>
+        <p>للمزيد من المعلومات التقنية الرسمية حول آلية عمل ملفات تعريف الارتباط والمعايير المعتمدة عالمياً، يمكنك زيارة <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies" target="_blank" rel="noopener">دليل تطوير الويب الموثق من Mozilla Developer Network (MDN)</a>.</p>
+
+        <h2>إعلانات جوجل أدسنس (Google AdSense) وسياسة الطرف الثالث</h2>
+        <p>نستعين بشركات إعلانية تابعة لأطراف ثالثة، مثل شركة Google، لعرض الإعلانات عندما تزور موقعنا الإلكتروني. تستخدم هذه الشركات معلومات حول زياراتك لهذا الموقع ومواقع الويب الأخرى (باستثناء الاسم، أو العنوان، أو عنوان البريد الإلكتروني، أو رقم الهاتف) لتقديم إعلانات حول السلع والخدمات التي قد تهتم بها.</p>
+        <p>تستخدم جوجل ملفات تعريف الارتباط (DART Cookies) لتمكين عرض الإعلانات للمستخدمين بناءً على زيارتهم لموقعنا ومواقع أخرى على الإنترنت. يمكن للمستخدمين إلغاء استخدام ملفات تعريف الارتباط الخاصة بـ DART عن طريق زيارة <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">سياسة الخصوصية الخاصة بإعلانات جوجل وشبكة المحتوى الرسمية</a>.</p>
+
+        <h2>حقوق الزوار والتحكم في البيانات</h2>
+        <ul>
+            <li>يحق لأي زائر منع تتبع ملفات تعريف الارتباط من خلال ضبط إعدادات الخصوصية في المتصفح الذي يستعمله.</li>
+            <li>يمكن للمستخدم مسح بيانات التخزين المؤقت والتفضيلات المحلية في أي وقت متى رغب في إعادة ضبط خيارات المتصفح.</li>
+            <li>للاطلاع على المتطلبات القانونية الإلزامية التي يفرضها برنامج أدسنس على الناشرين، يمكنكم مراجعة <a href="https://support.google.com/adsense/answer/48182" target="_blank" rel="noopener">صفحة سياسات برنامج Google AdSense الرسمية لمركز المساعدة</a>.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <button id="scrollTopBtn" onclick="scrollToTop()" title="الصعود لأعلى">⬆</button>
+
+  <footer>
+    <div class="container">
+      <p>جميع الحقوق محفوظة © 2026 - أداة ضغط الصور</p>
+      <div class="social-links">
+        <a href="https://www.youtube.com/@MajdFatihy" target="_blank" class="mf-social-btn">📺 يوتيوب</a>
+        <a href="https://www.facebook.com/majdfatihy98" target="_blank" class="mf-social-btn">👥 فيسبوك</a>
+        <a href="https://www.linkedin.com/in/majd-medical-procurement" target="_blank" class="mf-social-btn">💼 لينكد إن</a>
+        <a href="https://www.tiktok.com/@majdfatihy" target="_blank" class="mf-social-btn">🎵 تيك توك</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="cookieConsentBar">
+    <p>نحن نستخدم ملفات تعريف الارتباط (Cookies) لتحسين تجربة التصفح وحفظ تفضيلات الثيم وإدارة الإعلانات بكفاءة. استمرارك في التصفح يعني موافقتك على <a href="privacy.html">سياسة الخصوصية</a>.</p>
+    <button class="cookie-btn" onclick="acceptCookies()">موافق وإغلاق</button>
+  </div>
+
+<script>
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const nxt = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nxt);
+    localStorage.setItem('mf_theme', nxt);
+    updateBtn(nxt);
+  }
+  function updateBtn(theme) {
+    const btn = document.getElementById('themeBtn');
+    if(btn) btn.innerHTML = theme === 'dark' ? '☀️ الوضع النهاري' : '🌓 الوضع الليلي';
+  }
+  function acceptCookies() {
+    localStorage.setItem('mf_cookies_accepted', 'true');
+    document.getElementById('cookieConsentBar').style.display = 'none';
+  }
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.addEventListener('scroll', () => {
+    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById("progressBar").style.width = scrolled + "%";
+
+    const btn = document.getElementById('scrollTopBtn');
+    if (winScroll > 300) {
+      btn.style.display = 'flex';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    updateBtn(document.documentElement.getAttribute('data-theme'));
+    if (!localStorage.getItem('mf_cookies_accepted')) {
+      document.getElementById('cookieConsentBar').style.display = 'flex';
+    }
+  });
+</script>
 </body>
 </html>
