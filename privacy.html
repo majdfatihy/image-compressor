@@ -2,31 +2,93 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>سياسة الخصوصية - أداة ضغط الصور</title>
-<link rel="stylesheet" href="style.css"> <!-- أو ضع كود الـ CSS المنسق هنا مباشرة -->
 <style>
-:root { --bg: #f4f6f8; --card: #fff; --text: #17202a; --muted: #68737d; --border: #dce2e7; --primary: #e87524; }
-body.mf-dark-mode { --bg: #11161b; --card: #1b2127; --text: #f2f4f5; --muted: #aeb7bf; --border: #303941; background-color: var(--bg); color: var(--text); }
-body { margin: 0; background: var(--bg); font-family: Tahoma, Arial, sans-serif; padding: 20px; }
-.mf-static-page { max-width: 800px; margin: 40px auto; padding: 30px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; color: var(--text); line-height: 1.8; }
-.mf-static-page h1 { font-size: 22px; font-weight: 800; margin-bottom: 15px; }
-.mf-static-page h2 { font-size: 16px; font-weight: 700; margin-top: 20px; margin-bottom: 10px; }
-.mf-static-page p, .mf-static-page li { font-size: 14px; color: var(--muted); margin-bottom: 10px; }
-.back-link { display: inline-block; margin-bottom: 20px; color: var(--primary); text-decoration: none; font-weight: bold; }
+:root { 
+  --bg: #f4f6f8; 
+  --card: #fff; 
+  --text: #17202a; 
+  --muted: #68737d; 
+  --border: #dce2e7; 
+  --primary: #e87524; 
+}
+@media (prefers-color-scheme: dark) {
+  :root { 
+    --bg: #11161b; 
+    --card: #1b2127; 
+    --text: #f2f4f5; 
+    --muted: #aeb7bf; 
+    --border: #303941; 
+  }
+}
+body { 
+  margin: 0; 
+  background: var(--bg); 
+  color: var(--text); 
+  font-family: Tahoma, Arial, sans-serif; 
+  padding: 20px; 
+}
+.container { 
+  max-width: 800px; 
+  margin: 20px auto; 
+}
+.back-btn { 
+  display: inline-block; 
+  margin-bottom: 20px; 
+  padding: 8px 16px; 
+  background: var(--card); 
+  color: var(--primary); 
+  border: 1px solid var(--border); 
+  border-radius: 8px; 
+  text-decoration: none; 
+  font-weight: bold; 
+  transition: 0.2s; 
+}
+.back-btn:hover { 
+  opacity: 0.8; 
+}
+.mf-static-page { 
+  padding: 30px; 
+  background: var(--card); 
+  border: 1px solid var(--border); 
+  border-radius: 16px; 
+  line-height: 1.8; 
+}
+.mf-static-page h1 { 
+  font-size: 22px; 
+  font-weight: 800; 
+  margin-bottom: 15px; 
+}
+.mf-static-page h2 { 
+  font-size: 16px; 
+  font-weight: 700; 
+  margin-top: 20px; 
+  margin-bottom: 10px; 
+}
+.mf-static-page p, .mf-static-page li { 
+  font-size: 14px; 
+  color: var(--muted); 
+  margin-bottom: 10px; 
+}
 </style>
 </head>
 <body>
-<div class="mf-static-page">
-    <a href="index.html" class="back-link">← العودة للأداة الرئيسية</a>
-    <h1>سياسة الخصوصية</h1>
-    <p>تُعد خصوصية زوارنا ذات أهمية بالغة بالنسبة لنا. توضح وثيقة سياسة الخصوصية هذه أنواع المعلومات الشخصية التي تتلقاها وتجمعها أداة ضغط الصور وكيفية استخدامها.</p>
-    
-    <h2>معالجة الصور والخصوصية</h2>
-    <p>تتم عملية معالجة وضغط الصور بالكامل <strong>محلياً (Client-side)</strong> داخل متصفحك الشخصي باستخدام تقنيات JavaScript، ونحن لا نقوم نهائياً برفع أو تخزين أي صور تقوم بمعالجتها على خوادم خارجية.</p>
-    
-    <h2>إعلانات Google AdSense</h2>
-    <p>نستعين بشركات إعلانية كطرف ثالث مثل (Google AdSense) لعرض الإعلانات، والتي قد تستخدم ملفات تعريف الارتباط (Cookies) لتحسين تجربة الإعلانات بناءً على زياراتك للموقع.</p>
+<div class="container">
+    <a href="index.html" class="back-btn">← العودة إلى الصفحة الرئيسية</a>
+    <div class="mf-static-page">
+        <h1>سياسة الخصوصية</h1>
+        <p>تُعد خصوصية زوارنا ذات أهمية بالغة بالنسبة لنا. توضح وثيقة سياسة الخصوصية هذه أنواع المعلومات الشخصية التي تتلقاها وتجمعها أداة ضغط الصور وكيفية استخدامها.</p>
+        
+        <h2>معالجة الصور والخصوصية</h2>
+        <p>تتم عملية معالجة وضغط الصور بالكامل <strong>محلياً (Client-side)</strong> داخل متصفحك الشخصي باستخدام تقنيات JavaScript، ونحن لا نقوم نهائياً برفع أو تخزين أي صور تقوم بمعالجتها على خوادم خارجية.</p>
+        
+        <h2>ملفات الدخول (Log Files)</h2>
+        <p>مثل العديد من المواقع الأخرى، نستخدم ملفات الدخول التي تتضمن عنوان بروتوكول الإنترنت (IP)، نوع المتصفح، مزود خدمة الإنترنت، والتاريخ والوقت، وذلك لتحليل حركة الزوار.</p>
+        
+        <h2>إعلانات Google AdSense</h2>
+        <p>نستعين بشركات إعلانية كطرف ثالث مثل (Google AdSense) لعرض الإعلانات، والتي قد تستخدم ملفات تعريف الارتباط (Cookies) لتحسين تجربة الإعلانات بناءً على زياراتك للموقع.</p>
+    </div>
 </div>
 </body>
 </html>
