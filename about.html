@@ -1,95 +1,126 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>من نحن - أداة ضغط الصور</title>
+<title>من نحن - أداة ضغط الصور وتطوير الويب</title>
+<meta name="description" content="تعرف على منصة أداة ضغط الصور، أهدافنا التقنية، وفريق العمل المتخصص في تقديم حلول الويب السريعة والآمنة.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>">
 <style>
-:root { 
-  --bg: #f4f6f8; 
-  --card: #fff; 
-  --text: #17202a; 
-  --muted: #68737d; 
-  --border: #dce2e7; 
-  --primary: #e87524; 
-}
-@media (prefers-color-scheme: dark) {
-  :root { 
-    --bg: #11161b; 
-    --card: #1b2127; 
-    --text: #f2f4f5; 
-    --muted: #aeb7bf; 
-    --border: #303941; 
-  }
-}
-body { 
-  margin: 0; 
-  background: var(--bg); 
-  color: var(--text); 
-  font-family: Tahoma, Arial, sans-serif; 
-  padding: 20px; 
-}
-.container { 
-  max-width: 800px; 
-  margin: 20px auto; 
-}
-.back-btn { 
-  display: inline-block; 
-  margin-bottom: 20px; 
-  padding: 8px 16px; 
-  background: var(--card); 
-  color: var(--primary); 
-  border: 1px solid var(--border); 
-  border-radius: 8px; 
-  text-decoration: none; 
-  font-weight: bold; 
-  transition: 0.2s; 
-}
-.back-btn:hover { 
-  opacity: 0.8; 
-}
-.mf-static-page { 
-  padding: 30px; 
-  background: var(--card); 
-  border: 1px solid var(--border); 
-  border-radius: 16px; 
-  line-height: 1.8; 
-}
-.mf-static-page h1 { 
-  font-size: 22px; 
-  font-weight: 800; 
-  margin-bottom: 15px; 
-}
-.mf-static-page h2 { 
-  font-size: 16px; 
-  font-weight: 700; 
-  margin-top: 20px; 
-  margin-bottom: 10px; 
-}
-.mf-static-page p, .mf-static-page li { 
-  font-size: 14px; 
-  color: var(--muted); 
-  margin-bottom: 10px; 
-}
+:root { --bg: #f4f6f8; --card: #fff; --text: #17202a; --muted: #68737d; --border: #dce2e7; --primary: #e87524; }
+[data-theme="dark"] { --bg: #11161b; --card: #1b2127; --text: #f2f4f5; --muted: #aeb7bf; --border: #303941; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: Tahoma, Arial, sans-serif; display: flex; flex-direction: column; min-height: 100vh; padding-top: 70px; transition: background 0.3s, color 0.3s; }
+#progressBar { position: fixed; top: 0; left: 0; height: 3px; background: var(--primary); width: 0%; z-index: 10001; transition: width 0.1s; }
+header { position: fixed; top: 0; left: 0; right: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.container { max-width: 900px; margin: 0 auto; width: 100%; padding: 0 20px; box-sizing: border-box; }
+.nav-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
+.nav-links { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+.nav-bar a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.2s; }
+.nav-bar a:hover, .nav-bar a.active { color: var(--primary); }
+.theme-toggle { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
+main { flex: 1; padding: 40px 0; }
+.content-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 35px; line-height: 1.9; }
+h1 { font-size: 24px; font-weight: 800; margin-bottom: 20px; color: var(--text); }
+h2 { font-size: 18px; font-weight: 700; margin-top: 25px; margin-bottom: 12px; color: var(--text); }
+p, li { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+ul { padding-right: 20px; }
+#scrollTopBtn { position: fixed; bottom: 20px; left: 20px; background: var(--primary); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: none; align-items: center; justify-content: center; z-index: 999; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+footer { background: var(--card); border-top: 1px solid var(--border); padding: 25px 0; text-align: center; font-size: 13px; color: var(--muted); margin-top: auto; }
+.social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+.mf-social-btn { padding: 6px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); text-decoration: none; font-size: 12px; font-weight: 600; }
 </style>
+<script>
+  (function() {
+    const savedTheme = localStorage.getItem('mf_theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', savedTheme ? savedTheme : (systemDark ? 'dark' : 'light'));
+  })();
+</script>
 </head>
 <body>
-<div class="container">
-    <a href="index.html" class="back-btn">← العودة إلى الصفحة الرئيسية</a>
-    <div class="mf-static-page">
-        <h1>من نحن</h1>
-        <p>نحن منصة متخصصة في تقديم أدوات ويب مجانية وخفيفة، مصممة خصيصاً لمساعدة المدونيين وصناع المحتوى على تحسين وتطوير مواقعهم الإلكترونية بكل سهولة.</p>
-        
-        <h2>رسالتنا</h2>
-        <p>نسعى لتقديم حلول تقنية سريعة وآمنة ترفع من كفاءة السيو (SEO) وسرعة تصفح المواقع، مع الحفاظ التام على خصوصية بيانات المستخدمين وملفاتهم.</p>
-        
-        <h2>مميزات أدواتنا</h2>
-        <ul>
-            <li>السرعة الفائقة والأداء المتميز.</li>
-            <li>العمل المباشر داخل المتصفح دون الحاجة لرفع الملفات لسيرفرات خارجية.</li>
-            <li>الواجهة البسيطة والخالية من التعقيد.</li>
-        </ul>
+
+  <div id="progressBar"></div>
+
+  <header>
+    <div class="container">
+      <nav class="nav-bar">
+        <div class="nav-links">
+          <a href="privacy.html">سياسة الخصوصية</a>
+          <a href="about.html" class="active">من نحن</a>
+          <a href="contact.html">اتصل بنا</a>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌓 الوضع الليلي</button>
+      </nav>
     </div>
-</div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="content-box">
+        <h1>من نحن - أداة ضغط الصور وتطوير الويب المتقدمة</h1>
+        <p>نحن منصة برمجية رقمية عربية تهدف إلى تسهيل حياة المطورين، صناع المحتوى، ومدوني المواقع الإلكترونية عبر توفير أدوات ويب ذكية وسريعة تعمل مباشرة داخل المتصفح. انطلقت فكرة المشروع لتقديم حلول تقنية عملية تسهم في حل مشاكل بطء تحميل المواقع وتحسين كفاءة استهلاك البيانات.</p>
+        
+        <h2>رسالتنا ورؤيتنا التقنية</h2>
+        <p>نؤمن بأن الأدوات الرقمية يجب أن تكون مجانية، آمنة، وسهلة الاستخدام للجميع دون تعقيد. نركز في تطوير أدواتنا على الالتزام التام بالمعايير القياسية لمنظمة الويب العالمية <a href="https://www.w3.org/" target="_blank" rel="noopener">W3C الرسمي</a>، لضمان توافقية المنصة مع مختلف المتصفحات والأجهزة الذكية.</p>
+
+        <h2>لماذا تعد منصتنا الخيار الأمثل لك؟</h2>
+        <ul>
+            <li><strong>الاعتمادية العالية:</strong> نعتمد على أحدث تقنيات الجافاسكريبت المتقدمة لمعالجة الملفات محلياً على جهازك.</li>
+            <li><strong>الشفافية والخصوصية:</strong> نوضح لزوارنا كافة السياسات المتبعة بكل شفافية، ويمكنكم مراجعة تفاصيل حماية البيانات عبر <a href="privacy.html" style="color: var(--primary); text-decoration: none;">سياسة الخصوصية</a> الخاصة بنا.</li>
+            <li><strong>الدعم والتطوير المستمر:</strong> نعمل بشكل دائم على تحديث الأكواد والخصائص البرمجية لتتلاءم مع متطلبات محركات البحث وتجربة المستخدم UX.</li>
+        </ul>
+
+        <h2>التواصل والتفاعل المستمر</h2>
+        <p>يسعدنا دائماً تلقي مقترحاتكم وآرائكم لتطوير المنصة وإضافة مزيد من الأدوات البرمجية المفيدة. يمكنكم تصفح قنواتنا الرسمية أو مراسلتنا مباشرة عبر صفحة <a href="contact.html" style="color: var(--primary); text-decoration: none;">اتصل بنا</a> في أي وقت.</p>
+      </div>
+    </div>
+  </main>
+
+  <button id="scrollTopBtn" onclick="scrollToTop()" title="الصعود لأعلى">⬆</button>
+
+  <footer>
+    <div class="container">
+      <p>جميع الحقوق محفوظة © 2026 - أداة ضغط الصور</p>
+      <div class="social-links">
+        <a href="https://www.youtube.com/@MajdFatihy" target="_blank" class="mf-social-btn">📺 يوتيوب</a>
+        <a href="https://www.facebook.com/majdfatihy98" target="_blank" class="mf-social-btn">👥 فيسبوك</a>
+        <a href="https://www.linkedin.com/in/majd-medical-procurement" target="_blank" class="mf-social-btn">💼 لينكد إن</a>
+        <a href="https://www.tiktok.com/@majdfatihy" target="_blank" class="mf-social-btn">🎵 تيك توك</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const nxt = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nxt);
+    localStorage.setItem('mf_theme', nxt);
+    updateBtn(nxt);
+  }
+  function updateBtn(theme) {
+    const btn = document.getElementById('themeBtn');
+    if(btn) btn.innerHTML = theme === 'dark' ? '☀️ الوضع النهاري' : '🌓 الوضع الليلي';
+  }
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.addEventListener('scroll', () => {
+    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById("progressBar").style.width = scrolled + "%";
+
+    const btn = document.getElementById('scrollTopBtn');
+    if (winScroll > 300) {
+      btn.style.display = 'flex';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', () => updateBtn(document.documentElement.getAttribute('data-theme')));
+</script>
 </body>
 </html>
