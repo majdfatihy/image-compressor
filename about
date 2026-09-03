@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>من نحن - أداة ضغط الصور</title>
+<style>
+:root { 
+  --bg: #f4f6f8; 
+  --card: #fff; 
+  --text: #17202a; 
+  --muted: #68737d; 
+  --border: #dce2e7; 
+  --primary: #e87524; 
+}
+@media (prefers-color-scheme: dark) {
+  :root { 
+    --bg: #11161b; 
+    --card: #1b2127; 
+    --text: #f2f4f5; 
+    --muted: #aeb7bf; 
+    --border: #303941; 
+  }
+}
+body { 
+  margin: 0; 
+  background: var(--bg); 
+  color: var(--text); 
+  font-family: Tahoma, Arial, sans-serif; 
+  padding: 20px; 
+}
+.container { 
+  max-width: 800px; 
+  margin: 20px auto; 
+}
+.back-btn { 
+  display: inline-block; 
+  margin-bottom: 20px; 
+  padding: 8px 16px; 
+  background: var(--card); 
+  color: var(--primary); 
+  border: 1px solid var(--border); 
+  border-radius: 8px; 
+  text-decoration: none; 
+  font-weight: bold; 
+  transition: 0.2s; 
+}
+.back-btn:hover { 
+  opacity: 0.8; 
+}
+.mf-static-page { 
+  padding: 30px; 
+  background: var(--card); 
+  border: 1px solid var(--border); 
+  border-radius: 16px; 
+  line-height: 1.8; 
+}
+.mf-static-page h1 { 
+  font-size: 22px; 
+  font-weight: 800; 
+  margin-bottom: 15px; 
+}
+.mf-static-page h2 { 
+  font-size: 16px; 
+  font-weight: 700; 
+  margin-top: 20px; 
+  margin-bottom: 10px; 
+}
+.mf-static-page p, .mf-static-page li { 
+  font-size: 14px; 
+  color: var(--muted); 
+  margin-bottom: 10px; 
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-btn">← العودة إلى الصفحة الرئيسية</a>
+    <div class="mf-static-page">
+        <h1>من نحن</h1>
+        <p>نحن منصة متخصصة في تقديم أدوات ويب مجانية وخفيفة، مصممة خصيصاً لمساعدة المدونيين وصناع المحتوى على تحسين وتطوير مواقعهم الإلكترونية بكل سهولة.</p>
+        
+        <h2>رسالتنا</h2>
+        <p>نسعى لتقديم حلول تقنية سريعة وآمنة ترفع من كفاءة السيو (SEO) وسرعة تصفح المواقع، مع الحفاظ التام على خصوصية بيانات المستخدمين وملفاتهم.</p>
+        
+        <h2>مميزات أدواتنا</h2>
+        <ul>
+            <li>السرعة الفائقة والأداء المتميز.</li>
+            <li>العمل المباشر داخل المتصفح دون الحاجة لرفع الملفات لسيرفرات خارجية.</li>
+            <li>الواجهة البسيطة والخالية من التعقيد.</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
