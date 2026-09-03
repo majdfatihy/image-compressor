@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مصغر وضاغط الصور</title>
+<style>
+#mf-image-tool,#mf-image-tool *{box-sizing:border-box}
+#mf-image-tool{
+--bg:#f4f6f8;--card:#fff;--text:#17202a;--muted:#68737d;
+--border:#dce2e7;--primary:#e87524;--primary-dark:#c85d12;
+--success:#218653;--danger:#d74646;
+width:100%;max-width:1180px;margin:0 auto;padding:16px;
+background:var(--bg);color:var(--text);
+font-family:Tahoma,Arial,"Noto Sans Arabic",sans-serif;direction:rtl
+}
+#mf-image-tool.mf-dark{--bg:#11161b;--card:#1b2127;--text:#f2f4f5;--muted:#aeb7bf;--border:#303941}
+.mf-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.mf-title{margin:0;font-size:24px;font-weight:800}.mf-subtitle{margin:4px 0 0;color:var(--muted);font-size:13px}
+.mf-theme{width:42px;height:42px;flex:0 0 42px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);cursor:pointer;font-size:18px}
+.mf-upload{display:block;width:100%;padding:34px 18px;border:2px dashed var(--border);border-radius:16px;background:var(--card);text-align:center;cursor:pointer}
+.mf-upload:hover,.mf-upload.dragover{border-color:var(--primary);background:rgba(232,117,36,.06)}
+.mf-upload input{display:none}.mf-upload-icon{font-size:42px}.mf-upload-title{margin-top:8px;font-size:18px;font-weight:800}.mf-upload-text{margin-top:5px;color:var(--muted);font-size:13px}
+.mf-main{display:none;margin-top:14px}.mf-main.active{display:block}
+.mf-preview-card{width:100%;padding:12px;border:1px solid var(--border);border-radius:16px;background:var(--card)}
+.mf-preview-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.mf-preview-title{font-size:15px;font-weight:800}.mf-preview-help{color:var(--muted);font-size:11px}
+.mf-comparison{position:relative;width:100%;max-height:65vh;overflow:hidden;border-radius:12px;background:
+linear-gradient(45deg,#ddd 25%,transparent 25%),linear-gradient(-45deg,#ddd 25%,transparent 25%),
+linear-gradient(45deg,transparent 75%,#ddd 75%),linear-gradient(-45deg,transparent 75%,#ddd 75%);
+background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;touch-action:none;user-select:none}
+.mf-comparison canvas{display:block;position:absolute;inset:0;width:100%;height:100%}
+.mf-before{z-index:2;clip-path:inset(0 50% 0 0)}.mf-after{z-index:1}
+.mf-divider{position:absolute;top:0;bottom:0;left:50%;width:3px;transform:translateX(-50%);background:#fff;box-shadow:0 0 8px rgba(0,0,0,.35);z-index:6;pointer-events:none}
+.mf-handle{position:absolute;top:50%;left:50%;width:44px;height:44px;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;color:#222;font-weight:900;box-shadow:0 4px 15px rgba(0,0,0,.25);z-index:7;pointer-events:none}
+.mf-before-label,.mf-after-label{position:absolute;top:10px;padding:5px 8px;border-radius:6px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;z-index:8}
+.mf-before-label{right:10px}.mf-after-label{left:10px}
+.mf-compare{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;z-index:10}
+.mf-controls{margin-top:12px;display:grid;gap:10px}.mf-card{padding:13px;border:1px solid var(--border);border-radius:13px;background:var(--card)}
+.mf-card-title{margin-bottom:8px;font-size:14px;font-weight:800}.mf-card-description{margin-top:-3px;margin-bottom:9px;color:var(--muted);font-size:11px}
+.mf-quality-toggle{display:inline-flex;align-items:center;gap:7px;cursor:pointer;font-size:14px;font-weight:800}
+.mf-quality-toggle input{accent-color:var(--primary);margin:0}
+.mf-quality-row{display:flex;align-items:center;gap:10px}.mf-range{width:100%;margin:0;accent-color:var(--primary)}
+.mf-value{min-width:52px;color:var(--primary);font-size:13px;font-weight:800;text-align:center}
+.mf-size-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.mf-size-box{padding:9px 10px;border:1px solid var(--border);border-radius:10px;text-align:center}
+.mf-size-label{font-size:10px;color:var(--muted)}.mf-size-value{margin-top:2px;font-size:14px;font-weight:800}
+.mf-size-before .mf-size-value{color:var(--danger)}.mf-size-after .mf-size-value{color:var(--success)}
+.mf-size-after.is-larger .mf-size-value{color:var(--danger)}
+.mf-saving{text-align:center;margin-top:7px;font-size:12px;font-weight:800;color:var(--success)}
+.mf-saving.is-larger{color:var(--danger)}
+.mf-input-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mf-field label{display:block;margin-bottom:4px;color:var(--muted);font-size:11px}
+.mf-input,.mf-select{width:100%;height:42px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);padding:0 10px;outline:none}
+.mf-input:focus,.mf-select:focus{border-color:var(--primary)}
+.mf-lock-row{display:flex;gap:7px;margin-top:8px}.mf-option{flex:1;min-height:37px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);cursor:pointer;font-size:11px}
+.mf-option.active{border-color:var(--primary);color:var(--primary);background:rgba(232,117,36,.08)}
+.mf-methods{display:grid;gap:7px}.mf-method{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;padding:9px;border:1px solid var(--border);border-radius:9px}
+.mf-method input{margin-top:3px;accent-color:var(--primary)}.mf-method strong{display:block;font-size:12px}.mf-method span{display:block;margin-top:2px;color:var(--muted);font-size:10px}
+.mf-target{display:none;grid-template-columns:1fr 100px;gap:8px;margin-top:8px}.mf-target.show{display:grid}
+.mf-status{display:none;margin-top:9px;padding:9px;border-radius:9px;background:rgba(33,134,83,.09);color:var(--success);font-size:11px}
+.mf-status.show{display:block}.mf-buttons{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-top:10px}
+.mf-button{min-height:43px;border:1px solid var(--border);border-radius:9px;background:var(--card);color:var(--text);cursor:pointer;font-weight:800}
+.mf-button-primary{border-color:var(--primary);background:var(--primary);color:#fff}.mf-button-primary:hover{background:var(--primary-dark)}
+@media(max-width:650px){
+#mf-image-tool{padding:8px}.mf-title{font-size:20px}.mf-preview-card{padding:8px}
+.mf-buttons{grid-template-columns:1fr}.mf-input-row{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div id="mf-image-tool">
+<div class="mf-header"><div><h1 class="mf-title">مصغر وضاغط الصور</h1><p class="mf-subtitle">تغيير الأبعاد وضغط الصور وتحويل الصيغة مع مقارنة دقيقة قبل وبعد</p></div><button type="button" class="mf-theme" id="mfTheme">☀</button></div>
+<label class="mf-upload" id="mfUpload"><input type="file" id="mfFile" accept="image/jpeg,image/png,image/webp,image/avif,image/gif"><div class="mf-upload-icon">🖼️</div><div class="mf-upload-title">اسحب الصورة هنا أو اضغط لاختيار صورة</div><div class="mf-upload-text">JPG / PNG / WebP / AVIF</div></label>
+<div class="mf-main" id="mfMain">
+<div class="mf-preview-card">
+<div class="mf-preview-head"><div class="mf-preview-title">مقارنة قبل وبعد</div><div class="mf-preview-help">اسحب المؤشر للمقارنة</div></div>
+<div class="mf-comparison" id="mfComparison">
+<canvas id="mfAfter" class="mf-after"></canvas><canvas id="mfBefore" class="mf-before"></canvas>
+<div class="mf-before-label">BEFORE</div><div class="mf-after-label">AFTER</div><div class="mf-divider" id="mfDivider"></div><div class="mf-handle" id="mfHandle">↔</div>
+<input type="range" id="mfCompare" class="mf-compare" min="0" max="100" value="50">
+</div>
+<div class="mf-controls">
+<div class="mf-card">
+<div class="mf-card-title"><label class="mf-quality-toggle"><input type="checkbox" id="mfQualityMethod" checked><span>الضغط الفاقد Lossy</span></label><span class="mf-value" id="mfQualityValue">85%</span></div>
+<div class="mf-quality-row"><span>10%</span><input type="range" class="mf-range" id="mfQuality" min="10" max="100" value="85"><span>100%</span></div>
+<div class="mf-size-summary">
+<div class="mf-size-box mf-size-before"><div class="mf-size-label">قبل</div><div class="mf-size-value" id="mfBeforeSize">—</div></div>
+<div class="mf-size-box mf-size-after" id="mfAfterSizeBox"><div class="mf-size-label">بعد</div><div class="mf-size-value" id="mfAfterSize">—</div></div>
+</div>
+<div class="mf-saving" id="mfSaving">—</div>
+</div>
+
+</div>
+
+<div class="mf-card">
+<div class="mf-card-title">صيغة الإخراج</div><div class="mf-card-description">اختيار الصيغة يؤثر مباشرة في حجم الملف وطريقة الضغط.</div>
+<select class="mf-select" id="mfFormat">
+<option value="auto">تلقائي — WebP إن كان مدعومًا</option><option value="image/webp">WebP — ضغط قوي</option><option value="image/jpeg">JPEG — للصور الفوتوغرافية</option><option value="image/png">PNG — بدون فقدان</option><option value="image/avif">AVIF — عند دعم التصدير</option>
+</select>
+</div>
+
+<div class="mf-card">
+<div class="mf-card-title">طرق تقليل حجم الصورة</div>
+<div class="mf-card-description">يتم تطبيق الطرق الممكنة داخل المتصفح دون رفع الصورة إلى خادم.</div>
+<div class="mf-methods">
+<label class="mf-method"><input type="checkbox" id="mfFormatMethod" checked><div><strong>التحويل إلى صيغة أكثر كفاءة</strong><span>WebP أو AVIF قد يعطيان حجمًا أصغر من JPEG/PNG في حالات كثيرة.</span></div></label>
+<label class="mf-method"><input type="checkbox" id="mfMetadataMethod" checked><div><strong>إزالة Metadata</strong><span>إنشاء ملف جديد من البكسلات يؤدي عادةً إلى عدم نقل Metadata الأصلية إلى الناتج.</span></div></label>
+<label class="mf-method"><input type="checkbox" id="mfSmartMethod"><div><strong>الضغط الذكي حسب الحجم المستهدف</strong><span>يبحث عن أعلى جودة ممكنة ضمن الحجم الذي تحدده.</span></div></label>
+</div>
+<div class="mf-target" id="mfTargetBox"><input class="mf-input" id="mfTargetSize" type="number" min="1" value="300" placeholder="الحجم"><select class="mf-select" id="mfTargetUnit"><option value="KB">KB</option><option value="MB">MB</option></select></div>
+</div>
+<div class="mf-card">
+<div class="mf-card-title">مقاس الصورة المخصص</div>
+<div class="mf-card-description">حدد أبعاد الصورة الناتجة بالبكسل مع الحفاظ على النسبة عند تفعيل القفل.</div>
+<div class="mf-input-row">
+<div class="mf-field"><label>العرض</label><input class="mf-input" id="mfWidth" type="number" min="1" max="10000"></div>
+<div class="mf-field"><label>الارتفاع</label><input class="mf-input" id="mfHeight" type="number" min="1" max="10000"></div>
+</div>
+<div class="mf-lock-row"><button type="button" class="mf-option active" id="mfLock">🔒 قفل نسبة الأصل</button><button type="button" class="mf-option" id="mfOriginalRatio">نسبة الصورة الأصلية</button></div>
+</div>
+<div class="mf-status" id="mfStatus"></div>
+<div class="mf-buttons"><button type="button" class="mf-button mf-button-primary" id="mfDownload">تحميل الصورة</button><button type="button" class="mf-button" id="mfReplace">صورة أخرى</button><button type="button" class="mf-button" id="mfReset">إعادة ضبط</button></div>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+"use strict";
+const tool=document.getElementById("mf-image-tool"),fileInput=document.getElementById("mfFile"),upload=document.getElementById("mfUpload"),main=document.getElementById("mfMain");
+const comparison=document.getElementById("mfComparison"),beforeCanvas=document.getElementById("mfBefore"),afterCanvas=document.getElementById("mfAfter"),divider=document.getElementById("mfDivider"),handle=document.getElementById("mfHandle"),compare=document.getElementById("mfCompare");
+const quality=document.getElementById("mfQuality"),qualityValue=document.getElementById("mfQualityValue"),widthInput=document.getElementById("mfWidth"),heightInput=document.getElementById("mfHeight"),lockButton=document.getElementById("mfLock"),originalRatioButton=document.getElementById("mfOriginalRatio"),formatSelect=document.getElementById("mfFormat");
+const qualityMethod=document.getElementById("mfQualityMethod"),formatMethod=document.getElementById("mfFormatMethod"),metadataMethod=document.getElementById("mfMetadataMethod"),smartMethod=document.getElementById("mfSmartMethod"),targetBox=document.getElementById("mfTargetBox"),targetSize=document.getElementById("mfTargetSize"),targetUnit=document.getElementById("mfTargetUnit");
+const beforeSize=document.getElementById("mfBeforeSize"),afterSize=document.getElementById("mfAfterSize"),afterSizeBox=document.getElementById("mfAfterSizeBox"),saving=document.getElementById("mfSaving"),status=document.getElementById("mfStatus"),downloadButton=document.getElementById("mfDownload"),replaceButton=document.getElementById("mfReplace"),resetButton=document.getElementById("mfReset"),themeButton=document.getElementById("mfTheme");
+
+let source=null,sourceWidth=0,sourceHeight=0,sourceFile=null,sourceURL=null,resultBlob=null,renderTimer=null,ratioLocked=true,updatingDimensions=false,rendering=false,renderToken=0;
+const MAX_DIMENSION=10000,MAX_PIXELS=40000000;
+/* كانفاس غير مرئي يُستخدم فقط لإنتاج الصورة بالأبعاد الكاملة قبل ضغطها،
+   بحيث لا نضطر لرسمها على الشاشة قبل ضغطها فعلياً */
+const outputCanvas=document.createElement("canvas");
+
+function clamp(v,min,max){return Math.min(max,Math.max(min,v))}
+function bytesToText(bytes){
+ if(!Number.isFinite(bytes)||bytes<=0)return"0 B";
+ const units=["B","KB","MB","GB"];let i=0,v=bytes;
+ while(v>=1024&&i<units.length-1){v/=1024;i++}
+ return v.toFixed(i===0?0:2)+" "+units[i];
+}
+function showStatus(m){status.textContent=m;status.classList.add("show")}
+function revokeSourceURL(){if(sourceURL){URL.revokeObjectURL(sourceURL);sourceURL=null}}
+function closeSourceIfBitmap(){if(source&&typeof source.close==="function"){try{source.close()}catch(e){}}}
+function getDimensions(){
+ let w=parseInt(widthInput.value,10),h=parseInt(heightInput.value,10);
+ if(!Number.isFinite(w)||w<1)w=1;if(!Number.isFinite(h)||h<1)h=1;
+ w=clamp(w,1,MAX_DIMENSION);h=clamp(h,1,MAX_DIMENSION);
+ if(w*h>MAX_PIXELS){const s=Math.sqrt(MAX_PIXELS/(w*h));w=Math.max(1,Math.floor(w*s));h=Math.max(1,Math.floor(h*s))}
+ widthInput.value=w;heightInput.value=h;return{width:w,height:h}
+}
+function mimeExtension(m){if(m==="image/jpeg")return"jpg";if(m==="image/png")return"png";if(m==="image/avif")return"avif";return"webp"}
+function supportsMime(mime){
+ const c=document.createElement("canvas");
+ try{return c.toDataURL(mime).indexOf("data:"+mime)===0}catch(e){return false}
+}
+function resolveFormat(){
+ if(formatSelect.value!=="auto")return formatSelect.value;
+ if(formatMethod.checked && supportsMime("image/webp"))return "image/webp";
+ if(sourceFile && supportsMime(sourceFile.type))return sourceFile.type;
+ return "image/jpeg";
+}
+function updateQualityUI(){
+ const lossy=qualityMethod.checked;
+ const png=resolveFormat()==="image/png";
+ const smart=smartMethod.checked;
+ const enabled=lossy && !png && !smart;
+ quality.disabled=!enabled;
+ qualityValue.style.opacity=enabled?"1":".55";
+ if(png){
+  qualityValue.textContent="غير متاح مع PNG";
+ }else if(smart){
+  qualityValue.textContent="تلقائي";
+ }else{
+  qualityValue.textContent=lossy?quality.value+"%":"معطل";
+ }
+ smartMethod.disabled=!lossy;
+ if(!lossy && smartMethod.checked){
+  smartMethod.checked=false;
+  targetBox.classList.remove("show");
+ }
+}
+function loadImage(file){
+ if(!file)return;
+ if(!file.type.startsWith("image/")){showStatus("الملف المحدد ليس صورة.");return}
+ closeSourceIfBitmap();
+ sourceFile=file;revokeSourceURL();
+ Promise.resolve().then(async()=>{
+  if(typeof createImageBitmap==="function"){
+   try{source=await createImageBitmap(file,{imageOrientation:"from-image"})}
+   catch(e){source=await createImageBitmap(file)}
+   sourceWidth=source.width;sourceHeight=source.height;
+  }else{
+   sourceURL=URL.createObjectURL(file);
+   source=await new Promise((resolve,reject)=>{
+    const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=sourceURL;
+   });
+   sourceWidth=source.naturalWidth;sourceHeight=source.naturalHeight;
+  }
+  const initialScale=Math.min(1,1280/sourceWidth,720/sourceHeight);
+  widthInput.value=Math.max(1,Math.round(sourceWidth*initialScale));
+  heightInput.value=Math.max(1,Math.round(sourceHeight*initialScale));
+  beforeSize.textContent=bytesToText(file.size);
+  main.classList.add("active");render();
+ }).catch(e=>{console.error(e);showStatus("تعذر قراءة الصورة.")});
+}
+function drawContained(ctx,src,sw,sh,dw,dh){
+ const r=Math.min(dw/sw,dh/sh),w=sw*r,h=sh*r;
+ ctx.clearRect(0,0,dw,dh);
+ ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
+ ctx.drawImage(src,(dw-w)/2,(dh-h)/2,w,h);
+}
+function sizeCanvasToContainer(canvas){
+ const rect=comparison.getBoundingClientRect();
+ const dpr=window.devicePixelRatio||1;
+ const cw=Math.max(1,Math.floor(rect.width*dpr));
+ const ch=Math.max(1,Math.floor(rect.height*dpr));
+ canvas.width=cw;canvas.height=ch;
+ return{cw,ch};
+}
+function drawBeforePreview(){
+ if(!source)return;
+ const{cw,ch}=sizeCanvasToContainer(beforeCanvas);
+ const ctx=beforeCanvas.getContext("2d");
+ drawContained(ctx,source,sourceWidth,sourceHeight,cw,ch);
+}
+function canvasToBlob(canvas,mime,q){
+ return new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error("Encoding failed")),mime,q))
+}
+/* يفك ترميز الـ blob المضغوط فعلياً حتى تعكس المعاينة آثار الضغط الحقيقية
+   (تكتلات JPEG/WebP، فقدان تفاصيل...) بدل عرض بكسلات غير مضغوطة */
+function decodeBlobToImage(blob){
+ if(typeof createImageBitmap==="function"){
+  return createImageBitmap(blob).catch(()=>decodeViaImageElement(blob));
+ }
+ return decodeViaImageElement(blob);
+}
+function decodeViaImageElement(blob){
+ return new Promise((resolve,reject)=>{
+  const url=URL.createObjectURL(blob),img=new Image();
+  img.onload=()=>{resolve(img);URL.revokeObjectURL(url)};
+  img.onerror=e=>{URL.revokeObjectURL(url);reject(e)};
+  img.src=url;
+ });
+}
+async function smartCompress(canvas,mime,targetBytes){
+ if(mime==="image/png")return{blob:await canvasToBlob(canvas,mime,undefined),quality:null};
+ let low=.10,high=1,best=null;
+ for(let i=0;i<10;i++){
+  const q=(low+high)/2,b=await canvasToBlob(canvas,mime,q);
+  if(b.size<=targetBytes){best={blob:b,quality:q};low=q}else high=q;
+ }
+ return best||{blob:await canvasToBlob(canvas,mime,.10),quality:.10}
+}
+function updateComparison(){
+ const visual=100-Number(compare.value);
+ beforeCanvas.style.clipPath="inset(0 "+(100-visual)+"% 0 0)";
+ divider.style.left=visual+"%";handle.style.left=visual+"%";
+}
+async function processImage(){
+ if(!source||rendering)return;
+ const token=++renderToken;rendering=true;
+ let decoded=null;
+ try{
+  const d=getDimensions();
+  comparison.style.aspectRatio=d.width+" / "+d.height;
+
+  // 1) نرسم الصورة بالأبعاد الكاملة على كانفاس غير مرئي، بلا أي رسم على الشاشة بعد
+  outputCanvas.width=d.width;outputCanvas.height=d.height;
+  const octx=outputCanvas.getContext("2d");
+  octx.clearRect(0,0,d.width,d.height);
+  octx.imageSmoothingEnabled=true;octx.imageSmoothingQuality="high";
+  octx.drawImage(source,0,0,d.width,d.height);
+
+  drawBeforePreview();
+
+  // 2) نضغط فعلياً حسب الإعدادات
+  const mime=resolveFormat();
+  let q=Number(quality.value)/100,blob;
+  if(smartMethod.checked){
+   const amount=Math.max(1,Number(targetSize.value)||1),mult=targetUnit.value==="MB"?1048576:1024;
+   const r=await smartCompress(outputCanvas,mime,amount*mult);blob=r.blob;if(r.quality)q=r.quality;
+  }else{
+   const useQuality=qualityMethod.checked && mime!=="image/png";
+   blob=await canvasToBlob(outputCanvas,mime,useQuality?q:1);
+  }
+  if(token!==renderToken)return;
+  resultBlob=blob;
+
+  // 3) نفك ترميز الـ blob المضغوط ونرسمه في كانفاس "بعد" — هذا ما يجعل المعاينة حقيقية
+  decoded=await decodeBlobToImage(blob);
+  if(token!==renderToken)return;
+  const{cw,ch}=sizeCanvasToContainer(afterCanvas);
+  const actx=afterCanvas.getContext("2d");
+  drawContained(actx,decoded,d.width,d.height,cw,ch);
+
+  afterSize.textContent=bytesToText(blob.size);
+  const larger=blob.size>sourceFile.size;
+  afterSizeBox.classList.toggle("is-larger",larger);saving.classList.toggle("is-larger",larger);
+  const pct=Math.abs(1-blob.size/sourceFile.size)*100;
+  saving.textContent=larger?"زيادة حجم "+pct.toFixed(1)+"%":"تخفيض حجم "+pct.toFixed(1)+"%";
+  if(smartMethod.checked)qualityValue.textContent=Math.round(q*100)+"%";
+  const actual=blob.type.replace("image/","").toUpperCase();
+  showStatus("تمت المعالجة محليًا. الصورة الأصلية لا يتم رفعها إلى خادم. الصيغة الناتجة: "+actual+".");
+  updateComparison();
+ }catch(e){console.error(e);showStatus("حدث خطأ أثناء معالجة الصورة. جرّب مقاسًا أصغر أو صيغة أخرى.");}
+ finally{
+  if(decoded&&typeof decoded.close==="function"){try{decoded.close()}catch(e){}}
+  rendering=false;
+ }
+}
+function render(){clearTimeout(renderTimer);if(!source)return;renderTimer=setTimeout(processImage,80)}
+quality.addEventListener("input",()=>{qualityValue.textContent=quality.value+"%";if(qualityMethod.checked)render()});
+qualityMethod.addEventListener("change",()=>{updateQualityUI();render()});
+formatSelect.addEventListener("change",()=>{updateQualityUI();render()});
+widthInput.addEventListener("input",()=>{
+ if(ratioLocked&&!updatingDimensions&&sourceWidth&&sourceHeight){const w=Number(widthInput.value);if(w>0){updatingDimensions=true;heightInput.value=Math.max(1,Math.round(w*sourceHeight/sourceWidth));updatingDimensions=false}}
+ render()
+});
+heightInput.addEventListener("input",()=>{
+ if(ratioLocked&&!updatingDimensions&&sourceWidth&&sourceHeight){const h=Number(heightInput.value);if(h>0){updatingDimensions=true;widthInput.value=Math.max(1,Math.round(h*sourceWidth/sourceHeight));updatingDimensions=false}}
+ render()
+});
+lockButton.addEventListener("click",()=>{
+ ratioLocked=!ratioLocked;lockButton.classList.toggle("active",ratioLocked);lockButton.textContent=ratioLocked?"🔒 قفل نسبة الأصل":"🔓 نسبة حرة";render()
+});
+originalRatioButton.addEventListener("click",()=>{
+ if(!sourceWidth||!sourceHeight)return;widthInput.value=sourceWidth;heightInput.value=sourceHeight;ratioLocked=true;lockButton.classList.add("active");lockButton.textContent="🔒 قفل نسبة الأصل";render()
+});
+smartMethod.addEventListener("change",()=>{targetBox.classList.toggle("show",smartMethod.checked);updateQualityUI();render()});
+targetSize.addEventListener("input",render);targetUnit.addEventListener("change",render);
+[formatSelect,qualityMethod,formatMethod,metadataMethod].forEach(el=>{el.addEventListener("input",render);el.addEventListener("change",render)});
+compare.addEventListener("input",updateComparison);
+fileInput.addEventListener("change",()=>{if(fileInput.files&&fileInput.files.length)loadImage(fileInput.files[0])});
+upload.addEventListener("dragover",e=>{e.preventDefault();upload.classList.add("dragover")});
+upload.addEventListener("dragleave",()=>upload.classList.remove("dragover"));
+upload.addEventListener("drop",e=>{e.preventDefault();upload.classList.remove("dragover");if(e.dataTransfer.files&&e.dataTransfer.files.length)loadImage(e.dataTransfer.files[0])});
+replaceButton.addEventListener("click",()=>{fileInput.value="";fileInput.click()});
+resetButton.addEventListener("click",()=>{
+ quality.value=85;qualityValue.textContent="85%";
+ formatSelect.value="auto";
+ qualityMethod.checked=true;formatMethod.checked=true;metadataMethod.checked=true;smartMethod.checked=false;
+ targetBox.classList.remove("show");
+ updateQualityUI();
+ compare.value=50;ratioLocked=true;
+ lockButton.classList.add("active");lockButton.textContent="🔒 قفل نسبة الأصل";
+ if(source){const initialScale=Math.min(1,1280/sourceWidth,720/sourceHeight);
+  widthInput.value=Math.max(1,Math.round(sourceWidth*initialScale));
+  heightInput.value=Math.max(1,Math.round(sourceHeight*initialScale));render()}
+ updateComparison()
+});
+downloadButton.addEventListener("click",()=>{
+ if(!resultBlob){showStatus("انتظر حتى تنتهي معالجة الصورة.");return}
+ const d=getDimensions(),a=document.createElement("a"),url=URL.createObjectURL(resultBlob);
+ a.href=url;a.download="image-"+d.width+"x"+d.height+"."+mimeExtension(resultBlob.type);document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)
+});
+themeButton.addEventListener("click",()=>{tool.classList.toggle("mf-dark");themeButton.textContent=tool.classList.contains("mf-dark")?"☀":"☾"});
+window.addEventListener("resize",()=>{if(source){clearTimeout(renderTimer);renderTimer=setTimeout(processImage,100)}});
+updateQualityUI();
+updateComparison();
+})();
+</script>
+</body>
+</html>
