@@ -4,19 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>اتصل بنا - أداة ضغط الصور وتواصل معنا</title>
-<meta name="description" content="تواصل مع فريق الدعم الفني لأداة ضغط الصور عبر البريد الإلكتروني أو منصات التواصل الاجتماعي للاستفسارات والدعم الفني.">
+<meta name="description" content="تواصل مع فريق الدعم الفني لأداة ضغط الصور عبر البريد الإلكتروني أو منصات التواصل الاجتماعي للاستفسارات والدعم الفني."[cite: 3]>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>">
 <style>
 :root { --bg: #f4f6f8; --card: #fff; --text: #17202a; --muted: #68737d; --border: #dce2e7; --primary: #e87524; }
 [data-theme="dark"] { --bg: #11161b; --card: #1b2127; --text: #f2f4f5; --muted: #aeb7bf; --border: #303941; }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: Tahoma, Arial, sans-serif; display: flex; flex-direction: column; min-height: 100vh; padding-top: 70px; transition: background 0.3s, color 0.3s; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: Tahoma, Arial, sans-serif; display: flex; flex-direction: column; min-height: 100vh; padding-top: 70px; padding-bottom: 70px; transition: background 0.3s, color 0.3s; }
 #progressBar { position: fixed; top: 0; left: 0; height: 3px; background: var(--primary); width: 0%; z-index: 10001; transition: width 0.1s; }
 header { position: fixed; top: 0; left: 0; right: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
 .container { max-width: 900px; margin: 0 auto; width: 100%; padding: 0 20px; box-sizing: border-box; }
 .nav-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
-.nav-links { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-.nav-bar a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.2s; }
-.nav-bar a:hover, .nav-bar a.active { color: var(--primary); }
+.nav-logo { font-size: 16px; font-weight: 800; color: var(--text); text-decoration: none; }
 .theme-toggle { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; }
 main { flex: 1; padding: 40px 0; }
 .content-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 35px; line-height: 1.9; }
@@ -35,6 +33,9 @@ ul { padding-right: 20px; }
 .submit-btn:hover { opacity: 0.9; }
 #scrollTopBtn { position: fixed; bottom: 20px; left: 20px; background: var(--primary); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: none; align-items: center; justify-content: center; z-index: 999; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 footer { background: var(--card); border-top: 1px solid var(--border); padding: 25px 0; text-align: center; font-size: 13px; color: var(--muted); margin-top: auto; }
+.footer-links { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 12px; }
+.footer-links a { color: var(--muted); text-decoration: none; font-weight: 600; transition: 0.2s; }
+.footer-links a:hover { color: var(--primary); }
 .footer-social { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
 </style>
 <script>
@@ -52,12 +53,7 @@ footer { background: var(--card); border-top: 1px solid var(--border); padding: 
   <header>
     <div class="container">
       <nav class="nav-bar">
-        <div class="nav-links">
-          <a href="https://majdfatihy.github.io/image-compressor/">🏠 الرئيسية</a>
-          <a href="privacy.html">سياسة الخصوصية</a>
-          <a href="about.html">من نحن</a>
-          <a href="contact.html" class="active">اتصل بنا</a>
-        </div>
+        <a href="index.html" class="nav-logo">مصغر وضاغط الصور</a>
         <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌓 الوضع الليلي</button>
       </nav>
     </div>
@@ -67,7 +63,7 @@ footer { background: var(--card); border-top: 1px solid var(--border); padding: 
     <div class="container">
       <div class="content-box">
         <h1>اتصل بنا - تواصل مع فريق الدعم الفني والمطورين</h1>
-        <p>نحن نحرص دائماً على التواصل المستمر مع زوارنا الكرام، ونسعد بتلقي استفساراتكم، وملاحظاتكم، واقتراحاتكم البرمجية الهادفة لتطوير المنصة والارتقاء بجودة الخدمات الرقمية المقدمة. إذا واجهتك أي مشكلة أثناء استخدام أدوات ضغط وتصغير الصور، أو رغبت في الاستفسار عن الآليات التقنية المتبعة، فلا تتردد في مراسلتنا عبر القنوات الرسمية المتاحة أدناه.</p>
+        <p>نحن نحرص دائماً على التواصل المستمر مع زوارنا الكرام، ونسعد بتلقي استفساراتكم، وملاحظاتكم، واقتراحاتكم البرمجية الهادفة لتطوير المنصة والارتقاء بجودة الخدمات الرقمية المقدمة. إذا واجهتك أي مشكلة أثناء استخدام أدوات ضغط وتصغير الصور، أو رغبت في الاستفسار عن الآليات التقنية المتبعة، فلا تتردد في مراسلتنا عبر القنوات الرسمية المتاحة أدناه[cite: 3].</p>
         
         <h2>قنوات الاتصال والبريد الإلكتروني الرسمي</h2>
         <p>يمكنكم التواصل معنا بصورة مباشرة ومستمرة طوال أيام الأسبوع عبر البريد الإلكتروني الرسمي المخصص لاستقبال الشكاوى والمقترحات والدعم الفني:</p>
@@ -111,6 +107,12 @@ footer { background: var(--card); border-top: 1px solid var(--border); padding: 
 
   <footer>
     <div class="container">
+      <div class="footer-links">
+        <a href="index.html">🏠 الرئيسية</a>
+        <a href="privacy.html">سياسة الخصوصية</a>
+        <a href="about.html">من نحن</a>
+        <a href="contact.html">اتصل بنا</a>
+      </div>
       <p>جميع الحقوق محفوظة © 2026 - أداة ضغط الصور</p>
       <div class="footer-social">
         <a href="https://www.youtube.com/@MajdFatihy" target="_blank" class="mf-social-btn" style="font-size: 11px; padding: 5px 10px;">📺 يوتيوب</a>
