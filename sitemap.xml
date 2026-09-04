@@ -2,8 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://majdfatihy.github.io/image-compressor/</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-09-05</lastmod>
+  </url>
+  <url>
+    <loc>https://majdfatihy.github.io/image-compressor/about.html</loc>
+  </url>
+  <url>
+    <loc>https://majdfatihy.github.io/image-compressor/privacy.html</loc>
+  </url>
+  <url>
+    <loc>https://majdfatihy.github.io/image-compressor/contact.html</loc>
   </url>
 </urlset>
