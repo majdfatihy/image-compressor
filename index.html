@@ -69,9 +69,7 @@ body {
 header { position: fixed; top: 0; left: 0; right: 0; background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
 .container-nav { max-width: 1180px; margin: 0 auto; width: 100%; padding: 0 16px; box-sizing: border-box; }
 .nav-bar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
-.nav-links { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-.nav-bar a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.2s; }
-.nav-bar a:hover, .nav-bar a.active { color: var(--primary); }
+.nav-logo { font-size: 16px; font-weight: 800; color: var(--text); text-decoration: none; }
 .theme-toggle { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
 
 #mf-image-tool, #mf-image-tool * { box-sizing: border-box; }
@@ -85,7 +83,6 @@ header { position: fixed; top: 0; left: 0; right: 0; background: var(--card); bo
 .mf-title { margin: 0; font-size: 24px; font-weight: 800; color: var(--text); }
 .mf-subtitle { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
 
-/* أزرار التواصل الاجتماعي العلوية */
 .mf-social-bar { display: flex; gap: 8px; margin-top: 20px; margin-bottom: 14px; flex-wrap: wrap; }
 .mf-social-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 9px; background: var(--card); color: var(--text); text-decoration: none; font-size: 12px; font-weight: 700; transition: .2s; }
 .mf-social-btn:hover { border-color: var(--primary); color: var(--primary); }
@@ -97,7 +94,6 @@ header { position: fixed; top: 0; left: 0; right: 0; background: var(--card); bo
 .mf-upload-title { margin-top: 8px; font-size: 18px; font-weight: 800; color: var(--text); }
 .mf-upload-text { margin-top: 5px; color: var(--muted); font-size: 13px; }
 
-/* الشريط الرفيع البديل */
 .mf-drop-mini { display: none; width: 100%; padding: 14px; border: 2px dashed var(--border); border-radius: 12px; text-align: center; background: var(--card); cursor: pointer; margin-bottom: 14px; font-size: 13px; font-weight: 700; color: var(--muted); }
 
 .mf-main { display: none; margin-top: 14px; }
@@ -151,13 +147,35 @@ header { position: fixed; top: 0; left: 0; right: 0; background: var(--card); bo
 .mf-status { display: none; margin-top: 9px; padding: 9px; border-radius: 9px; background: rgba(33,134,83,.09); color: var(--success); font-size: 11px; }
 .mf-status.show { display: block; }
 
-/* الأزرار أسفل الضغط الفاقد */
 .mf-buttons { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; margin-top: 12px; }
 .mf-button { min-height: 43px; border: 1px solid var(--border); border-radius: 9px; background: var(--card); color: var(--text); cursor: pointer; font-weight: 800; }
 .mf-button-primary { border-color: var(--primary); background: var(--primary); color: #fff; }
 .mf-button-primary:hover { background: var(--primary-dark); }
 
-/* القسم الإرشادي السفلي */
+/* تصميم الإشعار المنبثق الأخضر (Toast) */
+#toastNotification {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--success);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 100000;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  text-align: center;
+  max-width: 90%;
+}
+#toastNotification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
 .seo-guide-section {
     margin-top: 40px; padding: 25px; 
     background: var(--card); 
@@ -174,6 +192,9 @@ header { position: fixed; top: 0; left: 0; right: 0; background: var(--card); bo
 
 #scrollTopBtn { position: fixed; bottom: 20px; left: 20px; background: var(--primary); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 16px; display: none; align-items: center; justify-content: center; z-index: 999; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 footer { background: var(--card); border-top: 1px solid var(--border); padding: 25px 0; text-align: center; font-size: 13px; color: var(--muted); margin-top: 40px; }
+.footer-links { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 12px; }
+.footer-links a { color: var(--muted); text-decoration: none; font-weight: 600; transition: 0.2s; }
+.footer-links a:hover { color: var(--primary); }
 .footer-social { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
 
 @media(max-width:650px){
@@ -195,16 +216,12 @@ footer { background: var(--card); border-top: 1px solid var(--border); padding: 
 <body>
 
   <div id="progressBar"></div>
+  <div id="toastNotification"></div>
 
   <header>
     <div class="container-nav">
       <nav class="nav-bar">
-        <div class="nav-links">
-          <a href="https://majdfatihy.github.io/image-compressor/" class="active">🏠 الرئيسية</a>
-          <a href="privacy.html">سياسة الخصوصية</a>
-          <a href="about.html">من نحن</a>
-          <a href="contact.html">اتصل بنا</a>
-        </div>
+        <a href="index.html" class="nav-logo">مصغر وضاغط الصور</a>
         <button class="theme-toggle" onclick="toggleThemeManual()" id="themeBtn">🌓 الوضع الليلي</button>
       </nav>
     </div>
@@ -301,6 +318,12 @@ footer { background: var(--card); border-top: 1px solid var(--border); padding: 
 
 <footer>
   <div class="container-nav">
+    <div class="footer-links">
+      <a href="index.html">🏠 الرئيسية</a>
+      <a href="privacy.html">سياسة الخصوصية</a>
+      <a href="about.html">من نحن</a>
+      <a href="contact.html">اتصل بنا</a>
+    </div>
     <p>جميع الحقوق محفوظة © 2026 - أداة ضغط الصور</p>
     <div class="footer-social">
       <a href="https://www.youtube.com/@MajdFatihy" target="_blank" class="mf-social-btn" style="font-size: 11px; padding: 5px 10px;">📺 يوتيوب</a>
@@ -327,6 +350,16 @@ function updateThemeBtn(theme) {
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toastNotification');
+  if(!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 4000);
 }
 
 window.addEventListener('scroll', () => {
@@ -586,14 +619,100 @@ resetButton.addEventListener("click",()=>{
   heightInput.value=Math.max(1,Math.round(sourceHeight*initialScale));render()}
  updateComparison()
 });
-downloadButton.addEventListener("click",()=>{
- if(!resultBlob){showStatus("انتظر حتى تنتهي معالجة الصورة.");return}
- const d=getDimensions(),a=document.createElement("a"),url=URL.createObjectURL(resultBlob);
- a.href=url;a.download="image-"+d.width+"x-"+d.height+"."+mimeExtension(resultBlob.type);document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)
+
+downloadButton.addEventListener("click", async () => {
+    if (!resultBlob) {
+        showStatus("انتظر حتى تنتهي معالجة الصورة.");
+        return;
+    }
+
+    const d = getDimensions();
+    const extension = mimeExtension(resultBlob.type);
+    const fileName = "image-" + d.width + "x" + d.height + "." + extension;
+    const folderName = "مجلد المستندات (Documents)";
+
+    try {
+        if (
+            window.Capacitor &&
+            window.Capacitor.Plugins &&
+            window.Capacitor.Plugins.Filesystem
+        ) {
+            const reader = new FileReader();
+
+            reader.onloadend = async () => {
+                try {
+                    const base64Data = reader.result.split(",")[1];
+
+                    await window.Capacitor.Plugins.Filesystem.writeFile({
+                        path: fileName,
+                        data: base64Data,
+                        directory: "DOCUMENTS"
+                    });
+
+                    // إشعار هاتف نظام حقيقي عبر Capacitor Local Notifications إذا توفرت
+                    if (window.Capacitor.Plugins.LocalNotifications) {
+                        try {
+                            await window.Capacitor.Plugins.LocalNotifications.schedule({
+                                notifications: [{
+                                    title: "تم تحميل الصورة بنجاح",
+                                    body: `تم حفظ الصورة ${fileName} في ${folderName}`,
+                                    id: new Date().getTime(),
+                                    schedule: { at: new Date(new Date().getTime() + 100) }
+                                }]
+                            });
+                        } catch (notifErr) {
+                            console.log("LocalNotifications error:", notifErr);
+                        }
+                    }
+
+                    showToast(`تم تحميل الصورة باسم: ${fileName} في ${folderName}`);
+                    showStatus(`تم حفظ الصورة بنجاح في ${folderName} باسم: ${fileName}`);
+
+                } catch (e) {
+                    console.error("Filesystem error:", e);
+                    showStatus("تعذر حفظ الصورة على الهاتف.");
+                }
+            };
+
+            reader.readAsDataURL(resultBlob);
+
+        } else {
+            const a = document.createElement("a");
+            const url = URL.createObjectURL(resultBlob);
+
+            a.href = url;
+            a.download = fileName;
+
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            setTimeout(() => {
+                URL.revokeObjectURL(url);
+            }, 1000);
+
+            showToast(`تم تحميل الصورة باسم: ${fileName} في التنزيلات (Downloads)`);
+            showStatus("تم تحميل الصورة باسم: " + fileName);
+        }
+
+    } catch (e) {
+        console.error("Download error:", e);
+        showStatus("حدث خطأ أثناء تحميل الصورة.");
+    }
 });
-window.addEventListener("resize",()=>{if(source){clearTimeout(renderTimer);renderTimer=setTimeout(processImage,100)}});
-updateQualityUI();
-updateComparison();
+
+history.pushState({page: 'home'}, '', '');
+window.addEventListener('popstate', function(event) {
+    history.pushState({page: 'home'}, '', '');
+    try {
+        if (typeof source !== 'undefined' && source) {
+            showStatus("تم منع إغلاق التطبيق. يمكنك اختيار صورة أخرى.");
+        }
+    } catch(e) {
+        console.log(e);
+    }
+});
+
 })();
 </script>
 
