@@ -250,7 +250,44 @@ footer { background: var(--card); border-top: 1px solid var(--border); padding: 
     <p class="mf-subtitle"></p>
   </div>
 </div>
+<!-- بداية إعلانات الهيدر (كمبيوتر + هاتف) -->
+<style>
+  .ad-desktop { display: flex; justify-content: center; margin: 15px 0; width: 100%; overflow: hidden; }
+  .ad-mobile { display: none; justify-content: center; margin: 15px 0; width: 100%; overflow: hidden; }
+  @media (max-width: 768px) {
+    .ad-desktop { display: none; }
+    .ad-mobile { display: flex; }
+  }
+</style>
 
+<!-- إعلان الكمبيوتر (مقاس 728x90) -->
+<div class="ad-desktop">
+<script>
+  atOptions = {
+    'key' : 'b438ca159fef3619cd01dd89663463be',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
+  };
+</script>
+<script src="https://bauval.org/22/b438ca159fef3619cd01dd89663463be"></script>
+</div>
+
+<!-- إعلان الهاتف (مقاس 300x250 أو Native) -->
+<div class="ad-mobile">
+<script>
+  atOptions = {
+    'key' : '729c9fd7aa7322cef370e2d2f67a5788',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://bauval.org/22/729c9fd7aa7322cef370e2d2f67a5788"></script>
+</div>
+<!-- نهاية الإعلانات -->
 <label class="mf-upload" id="mfUpload"><input type="file" id="mfFile" accept="image/jpeg,image/png,image/webp,image/avif,image/gif"><div class="mf-upload-icon">🖼️</div><div class="mf-upload-title">اسحب الصورة هنا أو اضغط لاختيار صورة</div><div class="mf-upload-text">JPG / PNG / WebP / AVIF</div></label>
 
 <label class="mf-drop-mini" id="mfDropMini"><input type="file" id="mfFileMini" accept="image/jpeg,image/png,image/webp,image/avif,image/gif">📁اضف صورة جديدة</label>
@@ -321,6 +358,25 @@ footer { background: var(--card); border-top: 1px solid var(--border); padding: 
         <li><strong>موافقة معايير الويب:</strong> تساعدك في تجهيز الصور بالمقاسات والأنماط المناسبة لتجربة مستخدم مثالية على الهاتف والكمبيوتر.</li>
     </ul>
 </section>
+<!-- بداية إعلانات ما قبل الفوتر -->
+<div class="ad-desktop">
+<script>
+  atOptions = {
+    'key' : '1e423ba61e8df2d60437276587320065',
+    'format' : 'iframe',
+    'height' : 60,
+    'width' : 468,
+    'params' : {}
+  };
+</script>
+<script src="https://bauval.org/22/1e423ba61e8df2d60437276587320065"></script>
+</div>
+
+<div class="ad-mobile">
+ <script async="async" data-cfasync="false" src="https://bauval.org/21/7d74d287d7c8907ca009698fb7e174e7"></script>
+<div id="container-7d74d287d7c8907ca009698fb7e174e7"></div>
+</div>
+<!-- نهاية الإعلانات -->
 </main>
 
 <button id="scrollTopBtn" onclick="scrollToTop()" title="الصعود لأعلى">⬆</button>
@@ -724,6 +780,6 @@ window.addEventListener('popstate', function(event) {
 
 })();
 </script>
-
+<script data-cfasync="false" src="https://bauval.org/14/959f77deac27dba936e9c02e98bc911c"></script>
 </body>
 </html>
