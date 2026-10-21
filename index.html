@@ -221,13 +221,8 @@ footer { background: var(--card); border-top: 1px solid var(--border); padding: 
     document.documentElement.setAttribute('data-theme', savedTheme ? savedTheme : (systemDark ? 'dark' : 'light'));
   })();
 </script>
-<!-- ملف الإعلانات الخارجي: لازم يفضل هنا (بدون async/defer) وقبل أي استدعاء
-     لأي دالة loadAdXxx() في باقي الصفحة، وإلا هتختفي الإعلانات فقط (أداة
-     ضغط الصور كود منفصل ومش متأثرة). حافظ على نفس المسار النسبي "ads.js"
-     أو عدّله هنا لو نقلت الملف لمجلد تاني. -->
-<script src="ads.js"></script>
 </head>
-<body>
+<body data-no-support>
 
   <div id="progressBar"></div>
   <div id="toastNotification"></div>
@@ -255,23 +250,9 @@ footer { background: var(--card); border-top: 1px solid var(--border); padding: 
     <p class="mf-subtitle"></p>
   </div>
 </div>
-<!-- إعلانات الهيدر (كمبيوتر + هاتف) — الأكواد في ads.js -->
-<style>
-  .ad-desktop { display: flex; justify-content: center; margin: 15px 0; width: 100%; overflow: hidden; }
-  .ad-mobile { display: none; justify-content: center; margin: 15px 0; width: 100%; overflow: hidden; }
-  @media (max-width: 768px) {
-    .ad-desktop { display: none; }
-    .ad-mobile { display: flex; }
-  }
-</style>
-
-<div class="ad-desktop">
-<script>loadAdHeaderDesktop();</script>
-</div>
-
-<div class="ad-mobile">
-<script>loadAdHeaderMobile();</script>
-</div>
+<!-- إعلانان تحت الهيدر، متجاوبان للهاتف والكمبيوتر (من adsterra.js) -->
+<div data-ad="topx"></div>
+<div data-ad="mid"></div>
 <label class="mf-upload" id="mfUpload"><input type="file" id="mfFile" accept="image/jpeg,image/png,image/webp,image/avif,image/gif"><div class="mf-upload-icon">🖼️</div><div class="mf-upload-title">اسحب الصورة هنا أو اضغط لاختيار صورة</div><div class="mf-upload-text">JPG / PNG / WebP / AVIF</div></label>
 
 <label class="mf-drop-mini" id="mfDropMini"><input type="file" id="mfFileMini" accept="image/jpeg,image/png,image/webp,image/avif,image/gif">📁اضف صورة جديدة</label>
@@ -342,15 +323,9 @@ footer { background: var(--card); border-top: 1px solid var(--border); padding: 
         <li><strong>موافقة معايير الويب:</strong> تساعدك في تجهيز الصور بالمقاسات والأنماط المناسبة لتجربة مستخدم مثالية على الهاتف والكمبيوتر.</li>
     </ul>
 </section>
-<!-- إعلانات ما قبل الفوتر (كمبيوتر + هاتف Native) — الأكواد في ads.js -->
-<div class="ad-desktop">
-<script>loadAdPreFooterDesktop();</script>
-</div>
-
-<div class="ad-mobile">
-<script>loadAdPreFooterMobileNative();</script>
-<div id="container-7d74d287d7c8907ca009698fb7e174e7"></div>
-</div>
+<!-- إعلانات ما قبل الفوتر (من adsterra.js) -->
+<div data-ad="seo"></div>
+<div data-ad="end"></div>
 </main>
 
 <button id="scrollTopBtn" onclick="scrollToTop()" title="الصعود لأعلى">⬆</button>
@@ -754,7 +729,6 @@ window.addEventListener('popstate', function(event) {
 
 })();
 </script>
-<!-- السوشيال بار — إعلان عائم، الكود في ads.js -->
-<script>loadFloatingAds();</script>
+<script src="adsterra.js" defer></script>
 </body>
 </html>
